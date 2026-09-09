@@ -9,6 +9,31 @@ const milestone = z.object({
   completed: z.boolean().optional(),
 });
 
+const optionalUrl = z
+  .string()
+  .trim()
+  .optional()
+  .nullable()
+  .transform((val) => {
+    if (!val || val === "") return undefined;
+    if (!/^https?:\/\//i.test(val)) {
+      return `https://${val}`;
+    }
+    return val;
+  })
+  .refine(
+    (val) => {
+      if (!val) return true;
+      try {
+        new URL(val);
+        return true;
+      } catch {
+        return false;
+      }
+    },
+    { message: "Enter a valid URL" }
+  );
+
 const projectFields = {
   name: z.string().min(1, "Name is required"),
   nameBn: z.string().optional(),
@@ -40,7 +65,7 @@ const projectFields = {
     .object({
       title: z.string().optional(),
       titleBn: z.string().optional(),
-      youtubeUrl: z.string().url("Enter a valid URL").optional().or(z.literal("")),
+      youtubeUrl: optionalUrl,
       poster: objectId.optional().nullable(),
       duration: z.string().optional(),
     })

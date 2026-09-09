@@ -112,6 +112,33 @@ const updateArea = async (
   const existing = await Area.findOne({ _id: id, ...liveFilter });
   if (!existing) throw new AppError(StatusCodes.NOT_FOUND, "Area not found");
 
+  if (typeof payload.order === "number" && payload.order !== existing.order) {
+    const oldOrder = existing.order ?? 0;
+    const newOrder = payload.order;
+
+    if (newOrder < oldOrder) {
+      // Shift intermediate items DOWN (+1)
+      await Area.updateMany(
+        {
+          _id: { $ne: id },
+          ...liveFilter,
+          order: { $gte: newOrder, $lt: oldOrder },
+        },
+        { $inc: { order: 1 } }
+      );
+    } else if (newOrder > oldOrder) {
+      // Shift intermediate items UP (-1)
+      await Area.updateMany(
+        {
+          _id: { $ne: id },
+          ...liveFilter,
+          order: { $gt: oldOrder, $lte: newOrder },
+        },
+        { $inc: { order: -1 } }
+      );
+    }
+  }
+
   const changes = diffFields(existing.toObject(), payload);
   const patch: Record<string, unknown> = { ...payload, updatedBy };
   if (payload.name && payload.name !== existing.name) {

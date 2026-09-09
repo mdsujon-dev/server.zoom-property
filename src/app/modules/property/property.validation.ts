@@ -25,6 +25,31 @@ const furnishing = z.enum([
   "Fully furnished",
 ]);
 
+const optionalUrl = z
+  .string()
+  .trim()
+  .optional()
+  .nullable()
+  .transform((val) => {
+    if (!val || val === "") return undefined;
+    if (!/^https?:\/\//i.test(val)) {
+      return `https://${val}`;
+    }
+    return val;
+  })
+  .refine(
+    (val) => {
+      if (!val) return true;
+      try {
+        new URL(val);
+        return true;
+      } catch {
+        return false;
+      }
+    },
+    { message: "Enter a valid URL" }
+  );
+
 /**
  * The shape of a listing.
  *
@@ -60,8 +85,8 @@ const listingFields = {
 
   rajukApproved: z.boolean().optional(),
   hasVirtualTour: z.boolean().optional(),
-  virtualTourUrl: z.string().url("Enter a valid URL").optional().or(z.literal("")),
-  videoUrl: z.string().url("Enter a valid URL").optional().or(z.literal("")),
+  virtualTourUrl: optionalUrl,
+  videoUrl: optionalUrl,
 
   coverImage: objectId.optional().nullable(),
   images: z.array(objectId).optional(),
