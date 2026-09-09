@@ -143,6 +143,10 @@ const DOMAIN_MODULES: { module: string; description: string }[] = [
     module: "Company Settings",
     description: "The agency's own name, logo, contact and ID card designs",
   },
+  {
+    module: "Dynamic Content",
+    description: "Page section headings and copy shown on the public site",
+  },
 ];
 
 const DASHBOARD_MODULES: { module: string; description: string }[] = [
@@ -152,7 +156,7 @@ const DASHBOARD_MODULES: { module: string; description: string }[] = [
   },
   {
     module: "Projects Summary",
-    description: "Dashboard: active developments and what is ready to hand over",
+    description: "Dashboard: active developments and how many are completed",
   },
   {
     module: "Enquiries Summary",

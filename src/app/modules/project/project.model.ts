@@ -56,6 +56,7 @@ const projectSchema = new Schema<IProject>(
     milestones: { type: [milestoneSchema], default: [] },
 
     featured: { type: Boolean, default: false, index: true },
+    isHome: { type: Boolean, default: false, index: true },
     isActive: { type: Boolean, default: true, index: true },
     isDeleted: { type: Boolean, default: false, index: true },
     createdBy: { type: Schema.Types.ObjectId, ref: "User" },

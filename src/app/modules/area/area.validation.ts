@@ -23,6 +23,7 @@ const areaFields = {
 
   order: z.number().optional(),
   featured: z.boolean().optional(),
+  isHome: z.boolean().optional(),
   isActive: z.boolean().optional(),
 };
 

@@ -55,6 +55,7 @@ const projectFields = {
   milestones: z.array(milestone).optional(),
 
   featured: z.boolean().optional(),
+  isHome: z.boolean().optional(),
   isActive: z.boolean().optional(),
 };
 

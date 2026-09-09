@@ -83,6 +83,14 @@ export interface IProject extends Document {
   milestones: IMilestone[];
 
   featured: boolean;
+  /**
+   * Picked for the home page.
+   *
+   * A deliberate choice by the desk rather than a side effect of ordering
+   * or of `featured`: the home page shows a handful, and which handful is
+   * an editorial decision that should survive someone reordering the list.
+   */
+  isHome: boolean;
   isActive: boolean;
   isDeleted: boolean;
   createdBy?: Types.ObjectId;

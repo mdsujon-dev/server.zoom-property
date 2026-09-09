@@ -39,9 +39,17 @@ export interface IArea extends Document {
   securityTier?: string;
   metroConnectivity?: string;
 
-  /** The home page shows the first ten, so the strongest addresses lead. */
+  /** Sort position in the areas list, lowest first. */
   order: number;
   featured: boolean;
+  /**
+   * Picked for the home page.
+   *
+   * A deliberate choice by the desk rather than a side effect of ordering
+   * or of `featured`: the home page shows a handful, and which handful is
+   * an editorial decision that should survive someone reordering the list.
+   */
+  isHome: boolean;
   isActive: boolean;
   isDeleted: boolean;
   createdBy?: Types.ObjectId;
