@@ -25,6 +25,11 @@ const uniqueSlug = async (name: string, excludeId?: string) => {
 };
 
 const createArea = async (payload: Partial<IArea>, createdBy?: string) => {
+  if (payload.order === undefined || payload.order === null || payload.order === 0) {
+    const maxArea = await Area.findOne(liveFilter).sort({ order: -1 }).select("order");
+    payload.order = maxArea && typeof maxArea.order === "number" ? maxArea.order + 1 : 1;
+  }
+
   const area = await Area.create({
     ...payload,
     slug: await uniqueSlug(payload.name as string),
@@ -53,9 +58,11 @@ const getAllAreas = async (query: Record<string, unknown>) => {
   const baseFilter: Record<string, unknown> = { ...liveFilter };
   if (activeOnly === "true") baseFilter.isActive = true;
 
+  const queryParams = { sort: "order", ...restQuery };
+
   const areaQuery = new QueryBuilder(
     Area.find(baseFilter).populate({ path: "image", select: "_id key" }),
-    restQuery
+    queryParams
   )
     .search(["name", "nameBn", "city"])
     .filter()
