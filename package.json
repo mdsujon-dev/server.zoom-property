@@ -13,6 +13,8 @@
     "create-module": "npx ts-node src/scripts/createModule.ts",
     "seed:user": "ts-node src/app/db/seed.ts",
     "migrate:project-stages": "ts-node src/scripts/migrateProjectStages.ts",
+    "seed:listings": "ts-node src/scripts/seedDemoListings.ts",
+    "seed:amenities": "ts-node src/scripts/seedAmenities.ts",
     "postman": "ts-node --transpile-only postman/generate.ts"
   },
   "dependencies": {

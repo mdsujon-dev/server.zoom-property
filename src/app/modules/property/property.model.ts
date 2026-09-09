@@ -115,6 +115,8 @@ const propertySchema = new Schema<IProperty>(
 
     badge: { type: String, enum: PROPERTY_BADGES },
     featured: { type: Boolean, default: false, index: true },
+    isHome: { type: Boolean, default: false, index: true },
+    order: { type: Number, default: 0 },
 
     agent: { type: Schema.Types.ObjectId, ref: "Agent", index: true },
     project: { type: Schema.Types.ObjectId, ref: "Project", index: true },

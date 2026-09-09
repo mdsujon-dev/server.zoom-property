@@ -83,6 +83,7 @@ export interface IProject extends Document {
   milestones: IMilestone[];
 
   featured: boolean;
+  order?: number;
   /**
    * Picked for the home page.
    *

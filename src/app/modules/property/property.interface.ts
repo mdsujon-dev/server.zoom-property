@@ -124,6 +124,8 @@ export interface IProperty extends Document {
   badge?: PropertyBadge;
   /** Carries the listing onto the home page. Not the same as `badge`. */
   featured: boolean;
+  isHome?: boolean;
+  order?: number;
 
   agent?: Types.ObjectId;
   /** Set when the unit belongs to a development the agency also lists. */

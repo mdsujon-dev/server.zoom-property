@@ -74,6 +74,8 @@ const listingFields = {
 
   badge: badge.optional().nullable(),
   featured: z.boolean().optional(),
+  isHome: z.boolean().optional(),
+  order: z.number().optional(),
 
   agent: objectId.optional().nullable(),
   project: objectId.optional().nullable(),
