@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { optionalUrl } from "../../utils/optionalUrl";
+
 const objectId = z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid id");
 
 const purpose = z.enum(["sale", "rent"]);
@@ -24,31 +26,6 @@ const furnishing = z.enum([
   "Semi-furnished",
   "Fully furnished",
 ]);
-
-const optionalUrl = z
-  .string()
-  .trim()
-  .optional()
-  .nullable()
-  .transform((val) => {
-    if (!val || val === "") return undefined;
-    if (!/^https?:\/\//i.test(val)) {
-      return `https://${val}`;
-    }
-    return val;
-  })
-  .refine(
-    (val) => {
-      if (!val) return true;
-      try {
-        new URL(val);
-        return true;
-      } catch {
-        return false;
-      }
-    },
-    { message: "Enter a valid URL" }
-  );
 
 /**
  * The shape of a listing.
