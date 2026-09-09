@@ -1,0 +1,5834 @@
+{
+  "info": {
+    "name": "Training Institute Management API",
+    "description": "Generated from the route files by `npm run postman`. Re-run that after changing a route rather than editing this file by hand.\n\n231 endpoints across 35 modules.\n\n1. Send **00 · Start here → Login**. The token is stored for you.\n2. Change `baseUrl` if the server is not on http://localhost:5008/api.\n3. Requests with `:param` in the address need a real id pasted in.\n\nExample bodies come from the zod validation schemas themselves, so the field names, the optional ones and the allowed enum values are exactly what the server accepts. Values in angle brackets are placeholders to replace.\nAuth and permission requirements are written in each request's description.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5008/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "00 · Start here",
+      "item": [
+        {
+          "name": "Login (saves {{token}})",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "const token = body && body.data && body.data.token;",
+                  "pm.test('login returned a token', function () {",
+                  "  pm.expect(token, JSON.stringify(body)).to.be.a('string');",
+                  "});",
+                  "if (token) pm.collectionVariables.set('token', token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"12345678\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Send this first. The test script stores the token in a collection variable and every other request picks it up automatically."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "action-logs",
+      "item": [
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/action-logs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "action-logs"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "attendance",
+      "item": [
+        {
+          "name": "GET /batch/:batchId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/attendance/batch/:batchId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "attendance",
+                "batch",
+                ":batchId"
+              ]
+            },
+            "description": "Requires login.\nPermission: Attendance / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /batch/:batchId/register",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/attendance/batch/:batchId/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "attendance",
+                "batch",
+                ":batchId",
+                "register"
+              ]
+            },
+            "description": "Requires login.\nPermission: Attendance / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /batch/:batchId/summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/attendance/batch/:batchId/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "attendance",
+                "batch",
+                ":batchId",
+                "summary"
+              ]
+            },
+            "description": "Requires login.\nPermission: Attendance / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /by-course",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/attendance/by-course",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "attendance",
+                "by-course"
+              ]
+            },
+            "description": "Requires login.\nPermission: Attendance / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /my-batches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/attendance/my-batches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "attendance",
+                "my-batches"
+              ]
+            },
+            "description": "Requires login.\nPermission: Attendance / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /student/:studentId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/attendance/student/:studentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "attendance",
+                "student",
+                ":studentId"
+              ]
+            },
+            "description": "Requires login.\nPermission: Attendance / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batch\": \"<batch>\",\n  \"date\": \"2026-01-01\",\n  \"slotStart\": \"<slotStart>\",\n  \"rows\": [\n    {\n      \"enrollment\": \"<enrollment>\",\n      \"status\": \"present\",\n      \"note\": \"<note>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/attendance",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "attendance"
+              ]
+            },
+            "description": "Requires login.\nPermission: Attendance / create"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "POST /change-password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": \"12345678\",\n  \"newPassword\": \"12345678\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/change-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "change-password"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /forgot-password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "forgot-password"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"12345678\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /refresh-token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"<refresh token>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/refresh-token",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "refresh-token"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /reset-password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"<reset token>\",\n  \"newPassword\": \"12345678\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "reset-password"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "batches",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/batches/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "batches",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Batches / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/batches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "batches"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/batches/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "batches",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"code\": \"<code>\",\n  \"course\": \"<course>\",\n  \"trainers\": [\n    \"<trainers>\"\n  ],\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2026-01-01\",\n  \"admissionStartDate\": \"2026-01-01\",\n  \"admissionEndDate\": \"2026-01-01\",\n  \"classSchedule\": [\n    {\n      \"day\": \"sun\",\n      \"startTime\": \"<startTime>\",\n      \"endTime\": \"<endTime>\",\n      \"room\": \"<room>\"\n    }\n  ],\n  \"classDays\": [\n    \"sun\"\n  ],\n  \"startTime\": \"<startTime>\",\n  \"endTime\": \"<endTime>\",\n  \"room\": \"<room>\",\n  \"capacity\": 0,\n  \"minStudents\": 0,\n  \"lowAttendanceThreshold\": 0,\n  \"certificateTemplate\": \"<certificateTemplate>\",\n  \"certificateAvailableFrom\": \"<certificateAvailableFrom>\",\n  \"status\": \"upcoming\",\n  \"statusLocked\": true,\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/batches/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "batches",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Batches / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"upcoming\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/batches/:id/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "batches",
+                ":id",
+                "status"
+              ]
+            },
+            "description": "Requires login.\nPermission: Batches / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"code\": \"<code>\",\n  \"course\": \"<course>\",\n  \"trainers\": [\n    \"<trainers>\"\n  ],\n  \"startDate\": \"2026-01-01\",\n  \"endDate\": \"2026-01-01\",\n  \"admissionStartDate\": \"2026-01-01\",\n  \"admissionEndDate\": \"2026-01-01\",\n  \"classSchedule\": [\n    {\n      \"day\": \"sun\",\n      \"startTime\": \"<startTime>\",\n      \"endTime\": \"<endTime>\",\n      \"room\": \"<room>\"\n    }\n  ],\n  \"classDays\": [\n    \"sun\"\n  ],\n  \"startTime\": \"<startTime>\",\n  \"endTime\": \"<endTime>\",\n  \"room\": \"<room>\",\n  \"capacity\": 0,\n  \"minStudents\": 0,\n  \"lowAttendanceThreshold\": 0,\n  \"certificateTemplate\": \"<certificateTemplate>\",\n  \"certificateAvailableFrom\": \"<certificateAvailableFrom>\",\n  \"status\": \"upcoming\",\n  \"statusLocked\": true,\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/batches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "batches"
+              ]
+            },
+            "description": "Requires login.\nPermission: Batches / create"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "certificates",
+      "item": [
+        {
+          "name": "DELETE /templates/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/templates/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "templates",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /eligibility/:enrollmentId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/eligibility/:enrollmentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "eligibility",
+                ":enrollmentId"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /student/:studentId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/student/:studentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "student",
+                ":studentId"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /templates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/templates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "templates"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /templates/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/templates/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "templates",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /templates/bin",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/templates/bin",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "templates",
+                "bin"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /verify/:code",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/verify/:code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "verify",
+                ":code"
+              ]
+            },
+            "description": "Public — no token needed.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/:id/restore",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                ":id",
+                "restore"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/revoke",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"<reason>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/certificates/:id/revoke",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                ":id",
+                "revoke"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/visibility",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visibleToStudent\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/certificates/:id/visibility",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                ":id",
+                "visibility"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /templates/:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"layout\": \"<layout>\",\n  \"frame\": \"<frame>\",\n  \"pageSize\": \"a4\",\n  \"orientation\": \"landscape\",\n  \"palette\": {\n    \"paper\": \"<paper>\",\n    \"ink\": \"<ink>\",\n    \"accent\": \"<accent>\"\n  },\n  \"fonts\": {\n    \"heading\": \"<heading>\",\n    \"name\": \"<name>\",\n    \"body\": \"<body>\"\n  },\n  \"backgroundImage\": \"<backgroundImage>\",\n  \"backgroundOpacity\": 0,\n  \"instituteName\": \"<instituteName>\",\n  \"title\": \"<title>\",\n  \"body\": \"<body>\",\n  \"achievementLine\": \"<achievementLine>\",\n  \"footerNote\": \"<footerNote>\",\n  \"numberLine\": \"<numberLine>\",\n  \"verifyLine\": \"<verifyLine>\",\n  \"logo\": \"<logo>\",\n  \"signatures\": [\n    {\n      \"name\": \"<name>\",\n      \"role\": \"<role>\",\n      \"image\": \"<image>\"\n    }\n  ],\n  \"showSeal\": true,\n  \"sealText\": \"<sealText>\",\n  \"numberFormat\": \"2026-01-01\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/certificates/templates/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "templates",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /templates/:id/restore",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/templates/:id/restore",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "templates",
+                ":id",
+                "restore"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enrollment\": \"<enrollment>\",\n  \"overrideReason\": \"<overrideReason>\",\n  \"visibleToStudent\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/certificates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / create"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /auto-issue/:batchId",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/auto-issue/:batchId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "auto-issue",
+                ":batchId"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / create\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /templates",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"layout\": \"<layout>\",\n  \"frame\": \"<frame>\",\n  \"pageSize\": \"a4\",\n  \"orientation\": \"landscape\",\n  \"palette\": {\n    \"paper\": \"<paper>\",\n    \"ink\": \"<ink>\",\n    \"accent\": \"<accent>\"\n  },\n  \"fonts\": {\n    \"heading\": \"<heading>\",\n    \"name\": \"<name>\",\n    \"body\": \"<body>\"\n  },\n  \"backgroundImage\": \"<backgroundImage>\",\n  \"backgroundOpacity\": 0,\n  \"instituteName\": \"<instituteName>\",\n  \"title\": \"<title>\",\n  \"body\": \"<body>\",\n  \"achievementLine\": \"<achievementLine>\",\n  \"footerNote\": \"<footerNote>\",\n  \"numberLine\": \"<numberLine>\",\n  \"verifyLine\": \"<verifyLine>\",\n  \"logo\": \"<logo>\",\n  \"signatures\": [\n    {\n      \"name\": \"<name>\",\n      \"role\": \"<role>\",\n      \"image\": \"<image>\"\n    }\n  ],\n  \"showSeal\": true,\n  \"sealText\": \"<sealText>\",\n  \"numberFormat\": \"2026-01-01\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/certificates/templates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "templates"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / create"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /templates/:id/duplicate",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/certificates/templates/:id/duplicate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "certificates",
+                "templates",
+                ":id",
+                "duplicate"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / create\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "countries",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/countries/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "countries",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Countries / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/countries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "countries"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/countries/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "countries",
+                ":id"
+              ]
+            },
+            "description": "Public — no token needed.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/serial",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serial_no\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/countries/:id/serial",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "countries",
+                ":id",
+                "serial"
+              ]
+            },
+            "description": "Requires login.\nPermission: Countries / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/countries/:id/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "countries",
+                ":id",
+                "status"
+              ]
+            },
+            "description": "Requires login.\nPermission: Countries / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"code\": \"<code>\",\n  \"flag\": \"<flag>\",\n  \"role\": \"<role>\",\n  \"address\": \"<address>\",\n  \"email\": \"someone@example.com\",\n  \"phone\": \"01700000000\",\n  \"accentSolid\": \"<objectId>\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/countries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "countries"
+              ]
+            },
+            "description": "Requires login.\nPermission: Countries / create"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /:id",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"code\": \"<code>\",\n  \"flag\": \"<flag>\",\n  \"role\": \"<role>\",\n  \"address\": \"<address>\",\n  \"email\": \"someone@example.com\",\n  \"phone\": \"01700000000\",\n  \"accentSolid\": \"<objectId>\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/countries/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "countries",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Countries / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "courses",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courses/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courses",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Courses / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /options/:kind/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courses/options/:kind/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courses",
+                "options",
+                ":kind",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Courses / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courses"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courses/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courses",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /options/:kind",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courses/options/:kind",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courses",
+                "options",
+                ":kind"
+              ]
+            },
+            "description": "Requires login.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"code\": \"<code>\",\n  \"category\": \"<category>\",\n  \"level\": \"<level>\",\n  \"description\": \"<description>\",\n  \"classMode\": \"offline\",\n  \"language\": \"<language>\",\n  \"prerequisites\": [\n    \"<prerequisites>\"\n  ],\n  \"prerequisiteCourses\": [\n    \"<prerequisiteCourses>\"\n  ],\n  \"totalClasses\": 0,\n  \"classDurationHours\": 0,\n  \"defaultTrainer\": \"<defaultTrainer>\",\n  \"refundPolicy\": \"<refundPolicy>\",\n  \"durationValue\": 0,\n  \"durationUnit\": \"minutes\",\n  \"fee\": 0,\n  \"discountPrice\": 0,\n  \"admissionFee\": 0,\n  \"paymentType\": \"one-time\",\n  \"fundingSource\": \"<fundingSource>\",\n  \"installments\": [\n    {\n      \"label\": \"<label>\",\n      \"amount\": 0\n    }\n  ],\n  \"courseOutline\": [\n    {\n      \"title\": \"<title>\",\n      \"description\": \"<description>\",\n      \"order\": 0,\n      \"modules\": [\n        {}\n      ]\n    }\n  ],\n  \"outlineFiles\": [\n    \"<outlineFiles>\"\n  ],\n  \"coverImage\": \"<coverImage>\",\n  \"certificateTitle\": \"<certificateTitle>\",\n  \"certificateTemplate\": \"<certificateTemplate>\",\n  \"certificateCriteria\": [\n    {\n      \"type\": \"attendance\",\n      \"label\": \"<label>\",\n      \"minPercent\": 0\n    }\n  ],\n  \"status\": \"active\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/courses/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courses",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Courses / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/courses/:id/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courses",
+                ":id",
+                "status"
+              ]
+            },
+            "description": "Requires login.\nPermission: Courses / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /options/:kind/:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"description\": \"<description>\",\n  \"order\": 0,\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/courses/options/:kind/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courses",
+                "options",
+                ":kind",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Courses / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"code\": \"<code>\",\n  \"category\": \"<category>\",\n  \"level\": \"<level>\",\n  \"description\": \"<description>\",\n  \"classMode\": \"offline\",\n  \"language\": \"<language>\",\n  \"prerequisites\": [\n    \"<prerequisites>\"\n  ],\n  \"prerequisiteCourses\": [\n    \"<prerequisiteCourses>\"\n  ],\n  \"totalClasses\": 0,\n  \"classDurationHours\": 0,\n  \"defaultTrainer\": \"<defaultTrainer>\",\n  \"refundPolicy\": \"<refundPolicy>\",\n  \"durationValue\": 0,\n  \"durationUnit\": \"minutes\",\n  \"fee\": 0,\n  \"discountPrice\": 0,\n  \"admissionFee\": 0,\n  \"paymentType\": \"one-time\",\n  \"fundingSource\": \"<fundingSource>\",\n  \"installments\": [\n    {\n      \"label\": \"<label>\",\n      \"amount\": 0\n    }\n  ],\n  \"courseOutline\": [\n    {\n      \"title\": \"<title>\",\n      \"description\": \"<description>\",\n      \"order\": 0,\n      \"modules\": [\n        {}\n      ]\n    }\n  ],\n  \"outlineFiles\": [\n    \"<outlineFiles>\"\n  ],\n  \"coverImage\": \"<coverImage>\",\n  \"certificateTitle\": \"<certificateTitle>\",\n  \"certificateTemplate\": \"<certificateTemplate>\",\n  \"certificateCriteria\": [\n    {\n      \"type\": \"attendance\",\n      \"label\": \"<label>\",\n      \"minPercent\": 0\n    }\n  ],\n  \"status\": \"active\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/courses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courses"
+              ]
+            },
+            "description": "Requires login.\nPermission: Courses / create"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /options/:kind",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"description\": \"<description>\",\n  \"order\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/courses/options/:kind",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "courses",
+                "options",
+                ":kind"
+              ]
+            },
+            "description": "Requires login.\nPermission: Courses / create\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "dashboard",
+      "item": [
+        {
+          "name": "GET /institute",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/institute",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard",
+                "institute"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /overview",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/overview",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard",
+                "overview"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /quick-stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/quick-stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard",
+                "quick-stats"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard",
+                "stats"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /today-classes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/today-classes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard",
+                "today-classes"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /traffic-sources",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/traffic-sources",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard",
+                "traffic-sources"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /weekly-activity",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/weekly-activity",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard",
+                "weekly-activity"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "designations",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/designations/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "designations",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Designations / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/designations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "designations"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/designations/:id/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "designations",
+                ":id",
+                "status"
+              ]
+            },
+            "description": "Requires login.\nPermission: Designations / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"description\": \"<description>\",\n  \"is_active\": true,\n  \"scope\": \"employee\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/designations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "designations"
+              ]
+            },
+            "description": "Requires login.\nPermission: Designations / create"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /:id",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"description\": \"<description>\",\n  \"is_active\": true,\n  \"scope\": \"employee\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/designations/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "designations",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Designations / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "dynamic-content",
+      "item": [
+        {
+          "name": "DELETE /:key",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dynamic-content/:key",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dynamic-content",
+                ":key"
+              ]
+            },
+            "description": "Requires login.\nPermission: Dynamic Content / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /bulk-delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dynamic-content/bulk-delete",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dynamic-content",
+                "bulk-delete"
+              ]
+            },
+            "description": "Requires login.\nPermission: Dynamic Content / delete"
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dynamic-content",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dynamic-content"
+              ]
+            },
+            "description": "Requires login.\nPermission: Dynamic Content / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:key/history",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dynamic-content/:key/history",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dynamic-content",
+                ":key",
+                "history"
+              ]
+            },
+            "description": "Requires login.\nPermission: Dynamic Content / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /by-group/:group",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dynamic-content/by-group/:group",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dynamic-content",
+                "by-group",
+                ":group"
+              ]
+            },
+            "description": "Public — no token needed.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /map",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dynamic-content/map",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dynamic-content",
+                "map"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /bulk-upsert",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contents\": [\n    {\n      \"key\": \"<key>\",\n      \"name\": \"<name>\",\n      \"value\": null,\n      \"imageUrl\": \"https://example.com\",\n      \"group\": \"<group>\",\n      \"type\": \"text\",\n      \"description\": \"<description>\",\n      \"isActive\": true\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dynamic-content/bulk-upsert",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dynamic-content",
+                "bulk-upsert"
+              ]
+            },
+            "description": "Requires login.\nPermission: Dynamic Content / update"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /upsert",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"<key>\",\n  \"name\": \"<name>\",\n  \"value\": null,\n  \"imageUrl\": \"https://example.com\",\n  \"group\": \"<group>\",\n  \"type\": \"text\",\n  \"description\": \"<description>\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/dynamic-content/upsert",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dynamic-content",
+                "upsert"
+              ]
+            },
+            "description": "Requires login.\nPermission: Dynamic Content / update"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "employees",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/employees/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/employees/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"email\": \"someone@example.com\",\n  \"username\": \"<username>\",\n  \"phone\": \"01700000000\",\n  \"profilePhoto\": \"<profilePhoto>\",\n  \"roleId\": \"<objectId>\",\n  \"designationId\": \"<objectId>\",\n  \"isActive\": true,\n  \"presentDivision\": \"<presentDivision>\",\n  \"presentDistrict\": \"<presentDistrict>\",\n  \"presentCity\": \"<presentCity>\",\n  \"presentPoliceStation\": \"<presentPoliceStation>\",\n  \"presentPostOffice\": \"<presentPostOffice>\",\n  \"presentPostalCode\": \"<presentPostalCode>\",\n  \"presentDetailedAddress\": \"<presentDetailedAddress>\",\n  \"permanentDivision\": \"<permanentDivision>\",\n  \"permanentDistrict\": \"<permanentDistrict>\",\n  \"permanentCity\": \"<permanentCity>\",\n  \"permanentPoliceStation\": \"<permanentPoliceStation>\",\n  \"permanentPostOffice\": \"<permanentPostOffice>\",\n  \"permanentPostalCode\": \"<permanentPostalCode>\",\n  \"permanentDetailedAddress\": \"<permanentDetailedAddress>\",\n  \"weekendDays\": [\n    \"sun\"\n  ],\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/employees/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/password",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newPassword\": \"12345678\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/employees/:id/password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":id",
+                "password"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / change password\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dateOfBirth\": \"2026-01-01\",\n  \"gender\": \"Male\",\n  \"bloodGroup\": \"<bloodGroup>\",\n  \"fatherName\": \"<fatherName>\",\n  \"motherName\": \"<motherName>\",\n  \"maritalStatus\": \"single\",\n  \"employmentType\": \"full-time\",\n  \"joiningDate\": \"2026-01-01\",\n  \"resignDate\": \"2026-01-01\",\n  \"salary\": 0,\n  \"salaryType\": \"monthly\",\n  \"nidNumber\": \"<nidNumber>\",\n  \"emergencyContactName\": \"<emergencyContactName>\",\n  \"emergencyContactPhone\": \"01700000000\",\n  \"documents\": [\n    \"<documents>\"\n  ],\n  \"status\": \"active\",\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/employees/:id/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":id",
+                "profile"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/employees/:id/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees",
+                ":id",
+                "status"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"email\": \"someone@example.com\",\n  \"password\": \"12345678\",\n  \"username\": \"<username>\",\n  \"phone\": \"01700000000\",\n  \"profilePhoto\": \"<profilePhoto>\",\n  \"roleId\": \"<objectId>\",\n  \"designationId\": \"<objectId>\",\n  \"presentDivision\": \"<presentDivision>\",\n  \"presentDistrict\": \"<presentDistrict>\",\n  \"presentCity\": \"<presentCity>\",\n  \"presentPoliceStation\": \"<presentPoliceStation>\",\n  \"presentPostOffice\": \"<presentPostOffice>\",\n  \"presentPostalCode\": \"<presentPostalCode>\",\n  \"presentDetailedAddress\": \"<presentDetailedAddress>\",\n  \"permanentDivision\": \"<permanentDivision>\",\n  \"permanentDistrict\": \"<permanentDistrict>\",\n  \"permanentCity\": \"<permanentCity>\",\n  \"permanentPoliceStation\": \"<permanentPoliceStation>\",\n  \"permanentPostOffice\": \"<permanentPostOffice>\",\n  \"permanentPostalCode\": \"<permanentPostalCode>\",\n  \"permanentDetailedAddress\": \"<permanentDetailedAddress>\",\n  \"weekendDays\": [\n    \"sun\"\n  ],\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/employees",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "employees"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / create"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "error-logs",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/error-logs/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "error-logs",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Error Logs / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /clear-all",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/error-logs/clear-all",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "error-logs",
+                "clear-all"
+              ]
+            },
+            "description": "Requires login.\nPermission: Error Logs / delete"
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/error-logs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "error-logs"
+              ]
+            },
+            "description": "Requires login.\nPermission: Error Logs / view"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "exams",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/exams/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exams",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Exams / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/exams",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exams"
+              ]
+            },
+            "description": "Requires login.\nPermission: Exams / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id/sheet",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/exams/:id/sheet",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exams",
+                ":id",
+                "sheet"
+              ]
+            },
+            "description": "Requires login.\nPermission: Exams / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /results/batch/:batchId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/exams/results/batch/:batchId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exams",
+                "results",
+                "batch",
+                ":batchId"
+              ]
+            },
+            "description": "Requires login.\nPermission: Exams / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /results/student/:studentId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/exams/results/student/:studentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exams",
+                "results",
+                "student",
+                ":studentId"
+              ]
+            },
+            "description": "Requires login.\nPermission: Exams / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<title>\",\n  \"type\": \"quiz\",\n  \"course\": \"<course>\",\n  \"batch\": \"<batch>\",\n  \"date\": \"2026-01-01\",\n  \"startTime\": \"<startTime>\",\n  \"endTime\": \"<endTime>\",\n  \"totalMarks\": 0,\n  \"passMarks\": 0,\n  \"weight\": 0,\n  \"note\": \"<note>\",\n  \"isPublished\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/exams/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exams",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Exams / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<title>\",\n  \"type\": \"quiz\",\n  \"course\": \"<course>\",\n  \"batch\": \"<batch>\",\n  \"date\": \"2026-01-01\",\n  \"startTime\": \"<startTime>\",\n  \"endTime\": \"<endTime>\",\n  \"totalMarks\": 0,\n  \"passMarks\": 0,\n  \"weight\": 0,\n  \"note\": \"<note>\",\n  \"isPublished\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/exams",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exams"
+              ]
+            },
+            "description": "Requires login.\nPermission: Exams / create"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /:id/results",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/exams/:id/results",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exams",
+                ":id",
+                "results"
+              ]
+            },
+            "description": "Requires login.\nPermission: Exams / create\nSends multipart/form-data — attach the file in Postman's Body tab.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "faculties",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/faculties/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Faculty / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /specializations/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/faculties/specializations/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties",
+                "specializations",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Faculty / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/faculties",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/faculties/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Faculty / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id/salary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/faculties/:id/salary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties",
+                ":id",
+                "salary"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /specializations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/faculties/specializations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties",
+                "specializations"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"phone\": \"01700000000\",\n  \"email\": \"someone@example.com\",\n  \"dateOfBirth\": \"2026-01-01\",\n  \"gender\": \"Male\",\n  \"photo\": \"<photo>\",\n  \"designation\": \"<designation>\",\n  \"specialization\": \"<specialization>\",\n  \"qualification\": \"<qualification>\",\n  \"experienceYears\": 0,\n  \"courses\": [\n    \"<courses>\"\n  ],\n  \"employmentType\": \"full-time\",\n  \"joiningDate\": \"2026-01-01\",\n  \"resignDate\": \"2026-01-01\",\n  \"salary\": 0,\n  \"salaryType\": \"monthly\",\n  \"presentAddress\": \"<presentAddress>\",\n  \"presentDivision\": \"<presentDivision>\",\n  \"presentDistrict\": \"<presentDistrict>\",\n  \"presentCity\": \"<presentCity>\",\n  \"presentPoliceStation\": \"<presentPoliceStation>\",\n  \"presentPostOffice\": \"<presentPostOffice>\",\n  \"presentPostalCode\": \"<presentPostalCode>\",\n  \"presentDetailedAddress\": \"<presentDetailedAddress>\",\n  \"permanentDivision\": \"<permanentDivision>\",\n  \"permanentDistrict\": \"<permanentDistrict>\",\n  \"permanentCity\": \"<permanentCity>\",\n  \"permanentPoliceStation\": \"<permanentPoliceStation>\",\n  \"permanentPostOffice\": \"<permanentPostOffice>\",\n  \"permanentPostalCode\": \"<permanentPostalCode>\",\n  \"permanentDetailedAddress\": \"<permanentDetailedAddress>\",\n  \"nidNumber\": \"<nidNumber>\",\n  \"documents\": [\n    \"<documents>\"\n  ],\n  \"status\": \"active\",\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/faculties/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Faculty / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /specializations/:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"description\": \"<description>\",\n  \"order\": 0,\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/faculties/specializations/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties",
+                "specializations",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Faculty / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"phone\": \"01700000000\",\n  \"email\": \"someone@example.com\",\n  \"dateOfBirth\": \"2026-01-01\",\n  \"gender\": \"Male\",\n  \"photo\": \"<photo>\",\n  \"designation\": \"<designation>\",\n  \"specialization\": \"<specialization>\",\n  \"qualification\": \"<qualification>\",\n  \"experienceYears\": 0,\n  \"courses\": [\n    \"<courses>\"\n  ],\n  \"employmentType\": \"full-time\",\n  \"joiningDate\": \"2026-01-01\",\n  \"resignDate\": \"2026-01-01\",\n  \"salary\": 0,\n  \"salaryType\": \"monthly\",\n  \"presentAddress\": \"<presentAddress>\",\n  \"presentDivision\": \"<presentDivision>\",\n  \"presentDistrict\": \"<presentDistrict>\",\n  \"presentCity\": \"<presentCity>\",\n  \"presentPoliceStation\": \"<presentPoliceStation>\",\n  \"presentPostOffice\": \"<presentPostOffice>\",\n  \"presentPostalCode\": \"<presentPostalCode>\",\n  \"presentDetailedAddress\": \"<presentDetailedAddress>\",\n  \"permanentDivision\": \"<permanentDivision>\",\n  \"permanentDistrict\": \"<permanentDistrict>\",\n  \"permanentCity\": \"<permanentCity>\",\n  \"permanentPoliceStation\": \"<permanentPoliceStation>\",\n  \"permanentPostOffice\": \"<permanentPostOffice>\",\n  \"permanentPostalCode\": \"<permanentPostalCode>\",\n  \"permanentDetailedAddress\": \"<permanentDetailedAddress>\",\n  \"nidNumber\": \"<nidNumber>\",\n  \"documents\": [\n    \"<documents>\"\n  ],\n  \"status\": \"active\",\n  \"note\": \"<note>\",\n  \"createLogin\": true,\n  \"roleId\": \"<objectId>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/faculties",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties"
+              ]
+            },
+            "description": "Requires login.\nPermission: Faculty / create"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /:id/login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"someone@example.com\",\n  \"roleId\": \"<objectId>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/faculties/:id/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties",
+                ":id",
+                "login"
+              ]
+            },
+            "description": "Requires login.\nPermission: Faculty / create\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /:id/salary",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 0,\n  \"head\": \"<head>\",\n  \"salaryMonth\": \"<salaryMonth>\",\n  \"method\": \"cash\",\n  \"date\": \"2026-01-01\",\n  \"reference\": \"<reference>\",\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/faculties/:id/salary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties",
+                ":id",
+                "salary"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / create\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /:id/salary-return",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 0,\n  \"head\": \"<head>\",\n  \"salaryMonth\": \"<salaryMonth>\",\n  \"method\": \"cash\",\n  \"date\": \"2026-01-01\",\n  \"reference\": \"<reference>\",\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/faculties/:id/salary-return",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties",
+                ":id",
+                "salary-return"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / create\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /specializations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"description\": \"<description>\",\n  \"order\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/faculties/specializations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "faculties",
+                "specializations"
+              ]
+            },
+            "description": "Requires login.\nPermission: Faculty / create"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "folders",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/folders/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "folders",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Library / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/folders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "folders"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/folders/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "folders",
+                ":id"
+              ]
+            },
+            "description": "Public — no token needed.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /tree",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/folders/tree",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "folders",
+                "tree"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"parent\": \"<parent>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/folders/create",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "folders",
+                "create"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Library / create"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /:id",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"parent\": \"<parent>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/folders/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "folders",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Library / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "history",
+      "item": [
+        {
+          "name": "GET /:entity/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/history/:entity/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "history",
+                ":entity",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "inquiries",
+      "item": [
+        {
+          "name": "DELETE /quotation/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/inquiries/quotation/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "inquiries",
+                "quotation",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Quotation Requests / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /all-contact",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/inquiries/all-contact",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "inquiries",
+                "all-contact"
+              ]
+            },
+            "description": "Requires login.\nPermission: Contact Messages / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /all-quotation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/inquiries/all-quotation",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "inquiries",
+                "all-quotation"
+              ]
+            },
+            "description": "Requires login.\nPermission: Quotation Requests / view"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /contact",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"email\": \"someone@example.com\",\n  \"phone\": \"01700000000\",\n  \"subject\": \"<subject>\",\n  \"message\": \"<message>\",\n  \"type\": \"<type>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/inquiries/contact",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "inquiries",
+                "contact"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /contact/:id/send-email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"<subject>\",\n  \"body\": \"<body>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/inquiries/contact/:id/send-email",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "inquiries",
+                "contact",
+                ":id",
+                "send-email"
+              ]
+            },
+            "description": "Requires login.\nPermission: Contact Messages / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /quotation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"email\": \"someone@example.com\",\n  \"phone\": \"01700000000\",\n  \"site_url\": \"https://example.com\",\n  \"company_name\": \"<company_name>\",\n  \"service\": \"<service>\",\n  \"budget\": \"<budget>\",\n  \"message\": \"<message>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/inquiries/quotation",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "inquiries",
+                "quotation"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /quotation/:id/send-email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"<subject>\",\n  \"body\": \"<body>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/inquiries/quotation/:id/send-email",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "inquiries",
+                "quotation",
+                ":id",
+                "send-email"
+              ]
+            },
+            "description": "Requires login.\nPermission: Quotation Requests / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "institute",
+      "item": [
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/institute",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "institute"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"shortName\": \"<shortName>\",\n  \"tagline\": \"<tagline>\",\n  \"logo\": \"<logo>\",\n  \"email\": \"someone@example.com\",\n  \"phone\": \"01700000000\",\n  \"website\": \"<website>\",\n  \"address\": \"<address>\",\n  \"invoicePrefix\": \"<invoicePrefix>\",\n  \"invoiceFooter\": \"<invoiceFooter>\",\n  \"certificateFooter\": \"<certificateFooter>\",\n  \"academicSession\": \"<academicSession>\",\n  \"idCardNote\": \"<idCardNote>\",\n  \"idCardTemplates\": {\n    \"student\": \"<student>\",\n    \"faculty\": \"<faculty>\",\n    \"employee\": \"<employee>\"\n  },\n  \"idCardOptions\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/institute",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "institute"
+              ]
+            },
+            "description": "Requires login.\nPermission: Institute Settings / update"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "media-library",
+      "item": [
+        {
+          "name": "DELETE /:key",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/media-library/:key",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library",
+                ":key"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Library / delete\nReplace every :param in the URL before sending.\nDeclared as a regular expression: :key is a storage key and may contain slashes."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /bin/bulk-purge",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/media-library/bin/bulk-purge",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library",
+                "bin",
+                "bulk-purge"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Bin / delete"
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /purge/:key",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/media-library/purge/:key",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library",
+                "purge",
+                ":key"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Bin / delete\nReplace every :param in the URL before sending.\nDeclared as a regular expression: :key is a storage key and may contain slashes."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/media-library",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Library / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /bin",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/media-library/bin",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library",
+                "bin"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Bin / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /file/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/media-library/file/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library",
+                "file",
+                ":id"
+              ]
+            },
+            "description": "Public — no token needed.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /usage/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/media-library/usage/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library",
+                "usage",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Library / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /bin/bulk-restore",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"keys\": [\n    \"<keys>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/media-library/bin/bulk-restore",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library",
+                "bin",
+                "bulk-restore"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Bin / restore"
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /move",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"<key>\",\n  \"folder\": \"<folder>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/media-library/move",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library",
+                "move"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Library / create"
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /rename",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldName\": \"<oldName>\",\n  \"newName\": \"<newName>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/media-library/rename",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library",
+                "rename"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Library / create"
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /restore/:key",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/media-library/restore/:key",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library",
+                "restore",
+                ":key"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Bin / restore\nReplace every :param in the URL before sending.\nDeclared as a regular expression: :key is a storage key and may contain slashes."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/media-library",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "media-library"
+              ]
+            },
+            "description": "Requires login.\nPermission: Media Library / create\nSends multipart/form-data — attach the file in Postman's Body tab."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "notices",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notices/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notices",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Notices / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notices",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notices"
+              ]
+            },
+            "description": "Requires login.\nPermission: Notices / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /board",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notices/board",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notices",
+                "board"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<title>\",\n  \"body\": \"<body>\",\n  \"audience\": [\n    \"all\"\n  ],\n  \"batches\": [\n    \"<batches>\"\n  ],\n  \"pinned\": true,\n  \"urgent\": true,\n  \"publishAt\": \"2026-01-01\",\n  \"expiresAt\": \"2026-01-01\",\n  \"isPublished\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/notices/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notices",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Notices / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<title>\",\n  \"body\": \"<body>\",\n  \"audience\": [\n    \"all\"\n  ],\n  \"batches\": [\n    \"<batches>\"\n  ],\n  \"pinned\": true,\n  \"urgent\": true,\n  \"publishAt\": \"2026-01-01\",\n  \"expiresAt\": \"2026-01-01\",\n  \"isPublished\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/notices",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notices"
+              ]
+            },
+            "description": "Requires login.\nPermission: Notices / create"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "notifications",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Notifications / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications"
+              ]
+            },
+            "description": "Requires login.\nPermission: Notifications / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Notifications / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /unread-count",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/unread-count",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                "unread-count"
+              ]
+            },
+            "description": "Requires login.\nPermission: Notifications / view"
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/read",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/:id/read",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                ":id",
+                "read"
+              ]
+            },
+            "description": "Requires login.\nPermission: Notifications / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /read-all",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/read-all",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "notifications",
+                "read-all"
+              ]
+            },
+            "description": "Requires login.\nPermission: Notifications / view"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "page-views",
+      "item": [
+        {
+          "name": "GET /active-sessions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/page-views/active-sessions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "page-views",
+                "active-sessions"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /quick-stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/page-views/quick-stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "page-views",
+                "quick-stats"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /top-pages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/page-views/top-pages",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "page-views",
+                "top-pages"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /traffic-sources",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/page-views/traffic-sources",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "page-views",
+                "traffic-sources"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /weekly-activity",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/page-views/weekly-activity",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "page-views",
+                "weekly-activity"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /track",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"path\": \"<path>\",\n  \"full_url\": \"https://example.com\",\n  \"referrer\": \"<referrer>\",\n  \"session_id\": \"<objectId>\",\n  \"visitor_id\": \"<objectId>\",\n  \"duration_ms\": 0,\n  \"timestamp\": \"<timestamp>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/page-views/track",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "page-views",
+                "track"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "permissions",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/permissions/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "permissions",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/permissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "permissions"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / view"
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"module\": \"<module>\",\n  \"description\": \"<description>\",\n  \"actions\": [\n    \"<actions>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/permissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "permissions"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /:id",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"module\": \"<module>\",\n  \"description\": \"<description>\",\n  \"actions\": [\n    \"<actions>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/permissions/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "permissions",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "portal",
+      "item": [
+        {
+          "name": "GET /faculty/me",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/portal/faculty/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "portal",
+                "faculty",
+                "me"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /student/me",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/portal/student/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "portal",
+                "student",
+                "me"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "reminders",
+      "item": [
+        {
+          "name": "GET /due",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reminders/due",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reminders",
+                "due"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /due/send",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reminders/due/send",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reminders",
+                "due",
+                "send"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / create\nSends multipart/form-data — attach the file in Postman's Body tab."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "reports",
+      "item": [
+        {
+          "name": "GET /admissions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reports/admissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reports",
+                "admissions"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /attendance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reports/attendance",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reports",
+                "attendance"
+              ]
+            },
+            "description": "Requires login.\nPermission: Attendance / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /cash-book",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reports/cash-book",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reports",
+                "cash-book"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /certificates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reports/certificates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reports",
+                "certificates"
+              ]
+            },
+            "description": "Requires login.\nPermission: Certificates / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /financial",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reports/financial",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reports",
+                "financial"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /profit-loss",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reports/profit-loss",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reports",
+                "profit-loss"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "role-permissions",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/role-permissions/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "role-permissions",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/role-permissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "role-permissions"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /role/:roleId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/role-permissions/role/:roleId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "role-permissions",
+                "role",
+                ":roleId"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roleId\": \"<objectId>\",\n  \"module\": \"<module>\",\n  \"permissions\": [\n    \"<permissions>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/role-permissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "role-permissions"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / update"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /:id",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roleId\": \"<objectId>\",\n  \"module\": \"<module>\",\n  \"permissions\": [\n    \"<permissions>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/role-permissions/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "role-permissions",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "roles",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/roles/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/roles/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/roles/:id/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles",
+                ":id",
+                "status"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<role>\",\n  \"description\": \"<description>\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / create"
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /:id",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<role>\",\n  \"description\": \"<description>\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/roles/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Roles / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "services-countries",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/services-countries/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "services-countries",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Services Countries / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/services-countries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "services-countries"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/services-countries/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "services-countries",
+                ":id"
+              ]
+            },
+            "description": "Public — no token needed.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"slug\": \"<slug>\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/services-countries/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "services-countries",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Services Countries / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"slug\": \"<slug>\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/services-countries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "services-countries"
+              ]
+            },
+            "description": "Requires login.\nPermission: Services Countries / create"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "sitemap",
+      "item": [
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sitemap",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "sitemap"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "staff-attendance",
+      "item": [
+        {
+          "name": "GET /month",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/staff-attendance/month",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "staff-attendance",
+                "month"
+              ]
+            },
+            "description": "Requires login.\nPermission: Staff Attendance / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /person/:staffType/:personId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/staff-attendance/person/:staffType/:personId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "staff-attendance",
+                "person",
+                ":staffType",
+                ":personId"
+              ]
+            },
+            "description": "Requires login.\nPermission: Staff Attendance / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /sheet",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/staff-attendance/sheet",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "staff-attendance",
+                "sheet"
+              ]
+            },
+            "description": "Requires login.\nPermission: Staff Attendance / view"
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"2026-01-01\",\n  \"entries\": [\n    {\n      \"staffType\": \"faculty\",\n      \"person\": \"<person>\",\n      \"status\": \"present\",\n      \"batch\": \"<batch>\",\n      \"slotStart\": \"<slotStart>\",\n      \"note\": \"<note>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/staff-attendance",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "staff-attendance"
+              ]
+            },
+            "description": "Requires login.\nPermission: Staff Attendance / create"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "students",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /options/:kind/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/options/:kind/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "options",
+                ":kind",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id/history",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/:id/history",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id",
+                "history"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id/payments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/:id/payments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id",
+                "payments"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /batch/:batchId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/batch/:batchId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "batch",
+                ":batchId"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /options/:kind",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/options/:kind",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "options",
+                ":kind"
+              ]
+            },
+            "description": "Requires login.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /refund-requests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/refund-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "refund-requests"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /verify/:studentId",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/verify/:studentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "verify",
+                ":studentId"
+              ]
+            },
+            "description": "Public — no token needed.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"nameBn\": \"<nameBn>\",\n  \"phone\": \"01700000000\",\n  \"email\": \"someone@example.com\",\n  \"dateOfBirth\": \"2026-01-01\",\n  \"gender\": \"Male\",\n  \"photo\": \"<photo>\",\n  \"bloodGroup\": \"<bloodGroup>\",\n  \"nationality\": \"<nationality>\",\n  \"maritalStatus\": \"Married\",\n  \"country\": \"<country>\",\n  \"fatherName\": \"<fatherName>\",\n  \"fatherNameBn\": \"<fatherNameBn>\",\n  \"fatherOccupation\": \"<fatherOccupation>\",\n  \"motherName\": \"<motherName>\",\n  \"motherNameBn\": \"<motherNameBn>\",\n  \"motherOccupation\": \"<motherOccupation>\",\n  \"guardianName\": \"<guardianName>\",\n  \"guardianPhone\": \"01700000000\",\n  \"guardianRelation\": \"<guardianRelation>\",\n  \"familyMembers\": 0,\n  \"presentDivision\": \"<presentDivision>\",\n  \"presentDistrict\": \"<presentDistrict>\",\n  \"presentCity\": \"<presentCity>\",\n  \"presentPoliceStation\": \"<presentPoliceStation>\",\n  \"presentPostOffice\": \"<presentPostOffice>\",\n  \"presentPostalCode\": \"<presentPostalCode>\",\n  \"presentDetailedAddress\": \"<presentDetailedAddress>\",\n  \"permanentDivision\": \"<permanentDivision>\",\n  \"permanentDistrict\": \"<permanentDistrict>\",\n  \"permanentCity\": \"<permanentCity>\",\n  \"permanentPoliceStation\": \"<permanentPoliceStation>\",\n  \"permanentPostOffice\": \"<permanentPostOffice>\",\n  \"permanentPostalCode\": \"<permanentPostalCode>\",\n  \"permanentDetailedAddress\": \"<permanentDetailedAddress>\",\n  \"presentAddress\": \"<presentAddress>\",\n  \"permanentAddress\": \"<permanentAddress>\",\n  \"city\": \"<city>\",\n  \"idType\": \"nid\",\n  \"idNumber\": \"<idNumber>\",\n  \"documents\": [\n    \"<documents>\"\n  ],\n  \"lastEducation\": \"<lastEducation>\",\n  \"educationInstitute\": \"<educationInstitute>\",\n  \"resultType\": \"<resultType>\",\n  \"result\": \"<result>\",\n  \"resultOutOf\": \"<resultOutOf>\",\n  \"sscPassingYear\": \"<sscPassingYear>\",\n  \"hscPassingYear\": \"<hscPassingYear>\",\n  \"bankName\": \"<bankName>\",\n  \"bankAccountName\": \"<bankAccountName>\",\n  \"bankAccountNumber\": \"<bankAccountNumber>\",\n  \"bankBranchName\": \"<bankBranchName>\",\n  \"bankRoutingNumber\": \"<bankRoutingNumber>\",\n  \"hasGovernmentIncentive\": true,\n  \"admissionDate\": \"2026-01-01\",\n  \"status\": \"active\",\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/enrollments/:enrollmentId/discount",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/:id/enrollments/:enrollmentId/discount",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id",
+                "enrollments",
+                ":enrollmentId",
+                "discount"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /enrollments/:enrollmentId",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"enrolled\",\n  \"discount\": 0,\n  \"dropReason\": \"<dropReason>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/enrollments/:enrollmentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "enrollments",
+                ":enrollmentId"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /enrollments/:enrollmentId/transfer",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"toBatch\": \"<toBatch>\",\n  \"reason\": \"<reason>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/enrollments/:enrollmentId/transfer",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "enrollments",
+                ":enrollmentId",
+                "transfer"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /options/:kind/:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"description\": \"<description>\",\n  \"order\": 0,\n  \"is_active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/options/:kind/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "options",
+                ":kind",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /refund-requests/:id/review",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"approve\",\n  \"reviewNote\": \"<reviewNote>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/refund-requests/:id/review",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "refund-requests",
+                ":id",
+                "review"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / approve\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"nameBn\": \"<nameBn>\",\n  \"phone\": \"01700000000\",\n  \"email\": \"someone@example.com\",\n  \"dateOfBirth\": \"2026-01-01\",\n  \"gender\": \"Male\",\n  \"photo\": \"<photo>\",\n  \"bloodGroup\": \"<bloodGroup>\",\n  \"nationality\": \"<nationality>\",\n  \"maritalStatus\": \"Married\",\n  \"country\": \"<country>\",\n  \"fatherName\": \"<fatherName>\",\n  \"fatherNameBn\": \"<fatherNameBn>\",\n  \"fatherOccupation\": \"<fatherOccupation>\",\n  \"motherName\": \"<motherName>\",\n  \"motherNameBn\": \"<motherNameBn>\",\n  \"motherOccupation\": \"<motherOccupation>\",\n  \"guardianName\": \"<guardianName>\",\n  \"guardianPhone\": \"01700000000\",\n  \"guardianRelation\": \"<guardianRelation>\",\n  \"familyMembers\": 0,\n  \"presentDivision\": \"<presentDivision>\",\n  \"presentDistrict\": \"<presentDistrict>\",\n  \"presentCity\": \"<presentCity>\",\n  \"presentPoliceStation\": \"<presentPoliceStation>\",\n  \"presentPostOffice\": \"<presentPostOffice>\",\n  \"presentPostalCode\": \"<presentPostalCode>\",\n  \"presentDetailedAddress\": \"<presentDetailedAddress>\",\n  \"permanentDivision\": \"<permanentDivision>\",\n  \"permanentDistrict\": \"<permanentDistrict>\",\n  \"permanentCity\": \"<permanentCity>\",\n  \"permanentPoliceStation\": \"<permanentPoliceStation>\",\n  \"permanentPostOffice\": \"<permanentPostOffice>\",\n  \"permanentPostalCode\": \"<permanentPostalCode>\",\n  \"permanentDetailedAddress\": \"<permanentDetailedAddress>\",\n  \"presentAddress\": \"<presentAddress>\",\n  \"permanentAddress\": \"<permanentAddress>\",\n  \"city\": \"<city>\",\n  \"idType\": \"nid\",\n  \"idNumber\": \"<idNumber>\",\n  \"documents\": [\n    \"<documents>\"\n  ],\n  \"lastEducation\": \"<lastEducation>\",\n  \"educationInstitute\": \"<educationInstitute>\",\n  \"resultType\": \"<resultType>\",\n  \"result\": \"<result>\",\n  \"resultOutOf\": \"<resultOutOf>\",\n  \"sscPassingYear\": \"<sscPassingYear>\",\n  \"hscPassingYear\": \"<hscPassingYear>\",\n  \"bankName\": \"<bankName>\",\n  \"bankAccountName\": \"<bankAccountName>\",\n  \"bankAccountNumber\": \"<bankAccountNumber>\",\n  \"bankBranchName\": \"<bankBranchName>\",\n  \"bankRoutingNumber\": \"<bankRoutingNumber>\",\n  \"hasGovernmentIncentive\": true,\n  \"admissionDate\": \"2026-01-01\",\n  \"status\": \"active\",\n  \"note\": \"<note>\",\n  \"enrollment\": {\n    \"course\": \"<course>\",\n    \"batch\": \"<batch>\",\n    \"discount\": 0,\n    \"courseFee\": 0,\n    \"admissionFee\": 0,\n    \"enrollmentDate\": \"2026-01-01\",\n    \"overridePrerequisites\": true\n  },\n  \"enrollments\": [\n    {\n      \"course\": \"<course>\",\n      \"batch\": \"<batch>\",\n      \"discount\": 0,\n      \"courseFee\": 0,\n      \"admissionFee\": 0,\n      \"enrollmentDate\": \"2026-01-01\",\n      \"overridePrerequisites\": true\n    }\n  ],\n  \"createLogin\": true,\n  \"roleId\": \"<objectId>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / create"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /:id/enroll",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course\": \"<course>\",\n  \"batch\": \"<batch>\",\n  \"discount\": 0,\n  \"courseFee\": 0,\n  \"admissionFee\": 0,\n  \"enrollmentDate\": \"2026-01-01\",\n  \"overridePrerequisites\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/:id/enroll",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id",
+                "enroll"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /:id/login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"someone@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/:id/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id",
+                "login"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / create\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /:id/payments",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enrollment\": \"<enrollment>\",\n  \"amount\": 0,\n  \"head\": \"<head>\",\n  \"method\": \"cash\",\n  \"date\": \"2026-01-01\",\n  \"reference\": \"<reference>\",\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/:id/payments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id",
+                "payments"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / create\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /options/:kind",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"description\": \"<description>\",\n  \"order\": 0,\n  \"is_active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/options/:kind",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "options",
+                ":kind"
+              ]
+            },
+            "description": "Requires login.\nPermission: Students / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /refund-requests",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"student\": \"<student>\",\n  \"enrollment\": \"<enrollment>\",\n  \"amount\": 0,\n  \"reason\": \"<reason>\",\n  \"method\": \"cash\",\n  \"head\": \"<head>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/refund-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "refund-requests"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / create"
+          },
+          "response": []
+        },
+        {
+          "name": "POST /refund-requests/:id/signed-copy",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/refund-requests/:id/signed-copy",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                "refund-requests",
+                ":id",
+                "signed-copy"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / update\nSends multipart/form-data — attach the file in Postman's Body tab.\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "transaction-heads",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transaction-heads/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transaction-heads",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transaction-heads",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transaction-heads"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view"
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"description\": \"<description>\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transaction-heads/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transaction-heads",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"type\": \"income\",\n  \"description\": \"<description>\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transaction-heads",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transaction-heads"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / create"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "transactions",
+      "item": [
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transactions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transactions"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /monthly",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transactions/monthly",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transactions",
+                "monthly"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view OR Income vs Expenses / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transactions/stats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transactions",
+                "stats"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view"
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 0,\n  \"reason\": \"<reason>\",\n  \"head\": \"<head>\",\n  \"date\": \"2026-01-01\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transactions/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transactions",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"income\",\n  \"amount\": 0,\n  \"reason\": \"<reason>\",\n  \"head\": \"<head>\",\n  \"date\": \"2026-01-01\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transactions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transactions"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / create"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "DELETE /:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / delete\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / view"
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /:id/salary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/:id/salary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                ":id",
+                "salary"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / view\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /me",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "me"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "GET /profile-images",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/profile-images",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "profile-images"
+              ]
+            },
+            "description": "Requires login."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<name>\",\n  \"email\": \"someone@example.com\",\n  \"phone\": \"01700000000\",\n  \"role\": \"SUPER_ADMIN\",\n  \"roleId\": \"<objectId>\",\n  \"designationId\": \"<objectId>\",\n  \"profilePhoto\": \"<profilePhoto>\",\n  \"isActive\": true,\n  \"presentDivision\": \"<presentDivision>\",\n  \"presentDistrict\": \"<presentDistrict>\",\n  \"presentCity\": \"<presentCity>\",\n  \"presentPoliceStation\": \"<presentPoliceStation>\",\n  \"presentPostOffice\": \"<presentPostOffice>\",\n  \"presentPostalCode\": \"<presentPostalCode>\",\n  \"presentDetailedAddress\": \"<presentDetailedAddress>\",\n  \"permanentDivision\": \"<permanentDivision>\",\n  \"permanentDistrict\": \"<permanentDistrict>\",\n  \"permanentCity\": \"<permanentCity>\",\n  \"permanentPoliceStation\": \"<permanentPoliceStation>\",\n  \"permanentPostOffice\": \"<permanentPostOffice>\",\n  \"permanentPostalCode\": \"<permanentPostalCode>\",\n  \"permanentDetailedAddress\": \"<permanentDetailedAddress>\",\n  \"salary\": 0,\n  \"salaryType\": \"monthly\",\n  \"weekendDays\": [\n    \"sun\"\n  ],\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                ":id"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/password",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newPassword\": \"12345678\",\n  \"oldPassword\": \"12345678\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user/:id/password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                ":id",
+                "password"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / change password\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH /:id/status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/:id/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                ":id",
+                "status"
+              ]
+            },
+            "description": "Requires login.\nPermission: Employees / update\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"someone@example.com\",\n  \"password\": \"12345678\",\n  \"name\": \"<name>\",\n  \"role\": \"SUPER_ADMIN\",\n  \"roleId\": \"<objectId>\",\n  \"designationId\": \"<objectId>\",\n  \"loginInfo\": {\n    \"device\": \"pc\",\n    \"browser\": \"<browser>\",\n    \"ipAddress\": \"<ipAddress>\",\n    \"pcName\": \"<pcName>\",\n    \"os\": \"<os>\",\n    \"userAgent\": \"<userAgent>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user"
+              ]
+            },
+            "description": "Public — no token needed."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /:id/salary",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 0,\n  \"head\": \"<head>\",\n  \"salaryMonth\": \"<salaryMonth>\",\n  \"method\": \"cash\",\n  \"date\": \"2026-01-01\",\n  \"reference\": \"<reference>\",\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user/:id/salary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                ":id",
+                "salary"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / create\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /:id/salary-return",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 0,\n  \"head\": \"<head>\",\n  \"salaryMonth\": \"<salaryMonth>\",\n  \"method\": \"cash\",\n  \"date\": \"2026-01-01\",\n  \"reference\": \"<reference>\",\n  \"note\": \"<note>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user/:id/salary-return",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                ":id",
+                "salary-return"
+              ]
+            },
+            "description": "Requires login.\nPermission: Income & Expense / create\nReplace every :param in the URL before sending."
+          },
+          "response": []
+        },
+        {
+          "name": "POST /profile-image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user/profile-image",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "profile-image"
+              ]
+            },
+            "description": "Requires login.\nSends multipart/form-data — attach the file in Postman's Body tab."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

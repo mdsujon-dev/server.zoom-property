@@ -1,0 +1,73 @@
+import { Document, Types } from "mongoose";
+
+/** Draft until somebody publishes it. Nothing goes live by being saved. */
+export type PostStatus = "draft" | "published";
+
+/**
+ * Who wrote it, as the site prints it.
+ *
+ * Embedded rather than a reference to a login, because the byline and the
+ * account are not the same thing: guest contributors and the managing director
+ * both get a byline, and neither needs a way into the panel to have one.
+ */
+export interface IPostAuthor {
+  name: string;
+  nameBn?: string;
+  role?: string;
+  roleBn?: string;
+  avatar?: Types.ObjectId;
+}
+
+export interface IBlogPost extends Document {
+  title: string;
+  titleBn?: string;
+  /** URL segment for `/blog/[slug]`. */
+  slug: string;
+
+  /** The card summary. Written, not truncated from the body. */
+  excerpt?: string;
+  excerptBn?: string;
+
+  /** The article itself, as HTML from the editor. */
+  content?: string;
+  contentBn?: string;
+
+  category: Types.ObjectId;
+  tags: string[];
+
+  coverImage?: Types.ObjectId;
+  author: IPostAuthor;
+
+  /**
+   * Reading time in minutes.
+   *
+   * Computed from the body on save at 200 words a minute, which is close
+   * enough and never disagrees with the article the way a hand-typed number
+   * does after an edit.
+   */
+  readMinutes: number;
+
+  status: PostStatus;
+  publishedAt?: Date;
+
+  /** The one article the blog index leads on. */
+  featured: boolean;
+  trending: boolean;
+  views: number;
+
+  isDeleted: boolean;
+  createdBy?: Types.ObjectId;
+  updatedBy?: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/** A blog category — "Market", "Legal", "Architecture". */
+export interface IBlogCategory extends Document {
+  name: string;
+  nameBn?: string;
+  slug: string;
+  description?: string;
+  order: number;
+  isActive: boolean;
+}

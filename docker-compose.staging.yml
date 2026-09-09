@@ -1,0 +1,52 @@
+services:
+  backend:
+    build:
+      context: .
+    restart: unless-stopped
+    environment:
+      NODE_ENV: staging
+      PORT: 6002
+      SERVER_URL: ${SERVER_URL}
+      DB_URL: ${DB_URL}
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      BCRYPT_SALT_ROUNDS: ${BCRYPT_SALT_ROUNDS:-10}
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
+      JWT_ACCESS_EXPIRES_IN: ${JWT_ACCESS_EXPIRES_IN:-1d}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      JWT_REFRESH_EXPIRES_IN: ${JWT_REFRESH_EXPIRES_IN:-7d}
+      JWT_OTP_SECRET: ${JWT_OTP_SECRET}
+      JWT_PASS_RESET_SECRET: ${JWT_PASS_RESET_SECRET}
+      JWT_PASS_RESET_EXPIRES_IN: ${JWT_PASS_RESET_EXPIRES_IN:-1h}
+      SENDER_EMAIL: ${SENDER_EMAIL}
+      SENDER_APP_PASS: ${SENDER_APP_PASS}
+      REDIS_URL: ${REDIS_URL}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ADMIN_NAME: ${ADMIN_NAME}
+      R2_ACCOUNT_ID: ${R2_ACCOUNT_ID}
+      R2_ACCESS_KEY_ID: ${R2_ACCESS_KEY_ID}
+      R2_SECRET_ACCESS_KEY: ${R2_SECRET_ACCESS_KEY}
+      R2_BUCKET: ${R2_BUCKET}
+      R2_PUBLIC_URL: ${R2_PUBLIC_URL}
+      FRONTEND_URL: ${FRONTEND_URL}
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET}
+    ports:
+      - "6002:6002"
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=dokploy-network
+      - traefik.http.routers.training-institute-dev-web.rule=Host(`devapi.yourdomain.com`)
+      - traefik.http.routers.training-institute-dev-web.entrypoints=web
+      - traefik.http.routers.training-institute-dev-web.middlewares=redirect-to-https@file
+      - traefik.http.routers.training-institute-dev-websecure.rule=Host(`devapi.yourdomain.com`)
+      - traefik.http.routers.training-institute-dev-websecure.entrypoints=websecure
+      - traefik.http.routers.training-institute-dev-websecure.tls.certresolver=letsencrypt
+      - traefik.http.services.training-institute-dev-websecure.loadbalancer.server.port=6002
+      - traefik.http.routers.training-institute-dev-websecure.service=training-institute-dev-websecure
+    networks:
+      - dokploy-network
+      - default
+
+networks:
+  dokploy-network:
+    external: true

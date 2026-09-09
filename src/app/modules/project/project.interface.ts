@@ -1,0 +1,91 @@
+import { Document, Types } from "mongoose";
+
+/**
+ * Where a development is in its build.
+ *
+ * Four words rather than a percentage, because a percentage alone tells a buyer
+ * nothing they can picture. `progress` carries the number beside it.
+ */
+export type ProjectStage =
+  | "Piling"
+  | "Structure"
+  | "Finishing"
+  | "Handover ready";
+
+/**
+ * One line of the build programme.
+ *
+ * `percent` is that milestone's share of the whole build, not its own
+ * completion — the sum across milestones is what `progress` reports, so a
+ * project cannot claim 60% while its milestones add to 40.
+ */
+export interface IMilestone {
+  label: string;
+  labelBn?: string;
+  percent: number;
+  completed: boolean;
+}
+
+/**
+ * An under-construction development.
+ *
+ * The point of this record is transparency: the milestone breakdown, the date
+ * somebody last walked the site, and the permit number are what separate a
+ * project page from a brochure. Every one of them is a field the desk has to
+ * fill in and can be held to.
+ */
+export interface IProject extends Document {
+  name: string;
+  nameBn?: string;
+  /** URL segment for `/projects/[slug]`. */
+  slug: string;
+  developer?: string;
+
+  area: Types.ObjectId;
+  city: string;
+
+  /** Completion, 0–100. Derived from `milestones` on every save. */
+  progress: number;
+  stage: ProjectStage;
+  /** Free text: "Q4 2027". Not a date — most of them are a quarter. */
+  handover?: string;
+
+  units: number;
+  unitsLeft: number;
+  /** "1,450 – 2,300 sq ft", as written. */
+  sizeRange?: string;
+  startingPrice?: number;
+
+  coverImage?: Types.ObjectId;
+  images: Types.ObjectId[];
+
+  description: string[];
+  descriptionBn: string[];
+
+  /**
+   * The site walkthrough. Filmed on the visit that produced `lastInspected`, so
+   * the footage and the percentages above it describe the same day.
+   */
+  video?: {
+    title?: string;
+    titleBn?: string;
+    youtubeUrl?: string;
+    poster?: Types.ObjectId;
+    duration?: string;
+  };
+
+  /** The day somebody from the agency last walked the site. */
+  lastInspected?: Date;
+  cctvStreamActive: boolean;
+  rajukPermitNo?: string;
+
+  milestones: IMilestone[];
+
+  featured: boolean;
+  isActive: boolean;
+  isDeleted: boolean;
+  createdBy?: Types.ObjectId;
+  updatedBy?: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
