@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { PROJECT_STAGES } from "./project.interface";
+
 import { optionalUrl } from "../../utils/optionalUrl";
 
 const objectId = z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid id");
@@ -22,9 +24,7 @@ const projectFields = {
   // `progress` is absent on purpose: it is the sum of the ticked milestones,
   // computed on save, and a form that could set it directly could make the
   // page lie.
-  stage: z
-    .enum(["Piling", "Structure", "Finishing", "Handover ready"])
-    .optional(),
+  stage: z.enum(PROJECT_STAGES).optional(),
   handover: z.string().optional(),
 
   units: z.number().min(0).optional(),

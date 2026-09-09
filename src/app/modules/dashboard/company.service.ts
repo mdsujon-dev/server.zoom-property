@@ -87,14 +87,14 @@ const getCompanyOverview = async (req: Request) => {
 
     canProjects
       ? (async () => {
-          const [active, handoverReady] = await Promise.all([
+          const [active, completed] = await Promise.all([
             Project.countDocuments({ isActive: true, ...liveFilter }),
             Project.countDocuments({
-              stage: "Handover ready",
+              stage: "Completed",
               ...liveFilter,
             }),
           ]);
-          return { active, handoverReady };
+          return { active, completed };
         })()
       : null,
 

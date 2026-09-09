@@ -12,6 +12,7 @@
     "build": "tsc",
     "create-module": "npx ts-node src/scripts/createModule.ts",
     "seed:user": "ts-node src/app/db/seed.ts",
+    "migrate:project-stages": "ts-node src/scripts/migrateProjectStages.ts",
     "postman": "ts-node --transpile-only postman/generate.ts"
   },
   "dependencies": {

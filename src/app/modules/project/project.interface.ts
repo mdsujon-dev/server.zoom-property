@@ -3,14 +3,15 @@ import { Document, Types } from "mongoose";
 /**
  * Where a development is in its build.
  *
- * Four words rather than a percentage, because a percentage alone tells a buyer
- * nothing they can picture. `progress` carries the number beside it.
+ * Three words rather than a percentage, because a percentage alone tells a
+ * buyer nothing they can picture. `progress` carries the number beside it.
+ *
+ * The list lives here, not in the model, so the schema and the request
+ * validator can share one vocabulary instead of drifting apart.
  */
-export type ProjectStage =
-  | "Piling"
-  | "Structure"
-  | "Finishing"
-  | "Handover ready";
+export const PROJECT_STAGES = ["Planning", "Processing", "Completed"] as const;
+
+export type ProjectStage = (typeof PROJECT_STAGES)[number];
 
 /**
  * One line of the build programme.

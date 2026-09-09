@@ -1,12 +1,5 @@
 import { Schema, model } from "mongoose";
-import { IProject } from "./project.interface";
-
-export const PROJECT_STAGES = [
-  "Piling",
-  "Structure",
-  "Finishing",
-  "Handover ready",
-];
+import { IProject, PROJECT_STAGES } from "./project.interface";
 
 const milestoneSchema = new Schema(
   {
@@ -29,7 +22,12 @@ const projectSchema = new Schema<IProject>(
     city: { type: String, required: true, trim: true, default: "Dhaka" },
 
     progress: { type: Number, default: 0, min: 0, max: 100 },
-    stage: { type: String, enum: PROJECT_STAGES, default: "Piling", index: true },
+    stage: {
+      type: String,
+      enum: [...PROJECT_STAGES],
+      default: "Planning",
+      index: true,
+    },
     handover: { type: String, trim: true },
 
     units: { type: Number, default: 0, min: 0 },
