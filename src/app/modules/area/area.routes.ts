@@ -9,6 +9,11 @@ const router = Router();
 
 // Open to any signed-in user: the listing form, the project form and the agent
 // form all need the area dropdown.
+/* ── Public ─────────────────────────────────────────────────────────────
+   The website's read. Mounted before "/:id" so "public" is never taken
+   for an id. */
+router.get("/public", AreaController.getPublicAreas);
+
 router.get("/", auth(), AreaController.getAllAreas);
 router.get("/:id", auth(), AreaController.getAreaById);
 

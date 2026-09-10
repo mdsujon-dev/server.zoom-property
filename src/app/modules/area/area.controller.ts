@@ -29,6 +29,28 @@ const getAllAreas = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+/**
+ * The website's read.
+ *
+ * `activeOnly` is forced rather than taken from the query: this route has no
+ * auth in front of it, and an area switched off in the panel is switched off
+ * everywhere. The caller keeps its other filters — `isHome=true` is how the
+ * home page asks for its own set.
+ */
+const getPublicAreas = catchAsync(async (req: Request, res: Response) => {
+  const { data, meta } = await AreaService.getAllAreas({
+    ...(req.query as Record<string, unknown>),
+    activeOnly: "true",
+  });
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Areas retrieved successfully",
+    meta,
+    data,
+  });
+});
+
 const getAreaById = catchAsync(async (req: Request, res: Response) => {
   const result = await AreaService.getAreaById(req.params.id);
   sendResponse(res, {
@@ -66,6 +88,7 @@ const deleteArea = catchAsync(async (req: Request, res: Response) => {
 export const AreaController = {
   createArea,
   getAllAreas,
+  getPublicAreas,
   getAreaById,
   updateArea,
   deleteArea,

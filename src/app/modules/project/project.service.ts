@@ -89,6 +89,30 @@ const getAllProjects = async (query: Record<string, unknown>) => {
   return { data, meta };
 };
 
+/**
+ * One project by its slug, for the website.
+ *
+ * Inactive developments are not found rather than hidden: a project switched
+ * off in the panel should 404 on the site, not render an empty page.
+ */
+const getProjectBySlug = async (slug: string) => {
+  const project = await withRelations(
+    Project.findOne({ slug, isActive: true, ...liveFilter })
+  );
+  if (!project) throw new AppError(StatusCodes.NOT_FOUND, "Project not found");
+
+  const listings = await Property.find({
+    project: (project as any)._id,
+    status: "available",
+    ...liveFilter,
+  })
+    .select("_id slug referenceNo title price beds baths size coverImage")
+    .populate({ path: "coverImage", select: "_id key" })
+    .sort({ createdAt: -1 });
+
+  return { project, listings };
+};
+
 /** One project, with the listings that sit inside it. */
 const getProjectById = async (id: string) => {
   const project = await withRelations(
@@ -170,6 +194,7 @@ export const ProjectService = {
   createProject,
   getAllProjects,
   getProjectById,
+  getProjectBySlug,
   updateProject,
   deleteProject,
 };

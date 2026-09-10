@@ -11,6 +11,7 @@ const router = Router();
    The website's read. Unauthenticated on purpose, and answered only for
    listings that are actually on the market — see `getPropertyBySlug`. Mounted
    first so "public" is never read as an id. */
+router.get("/public", PropertyController.getPublicProperties);
 router.get("/public/:slug", PropertyController.getPropertyBySlug);
 
 /* ── Managed option lists ───────────────────────────────────────────────

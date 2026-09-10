@@ -43,6 +43,25 @@ const getPropertyById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+/**
+ * The website's list. `publishedOnly` is forced rather than trusted from the
+ * query — this route has no auth in front of it, and a draft is nobody's
+ * business outside the panel.
+ */
+const getPublicProperties = catchAsync(async (req: Request, res: Response) => {
+  const { data, meta } = await PropertyService.getAllProperties({
+    ...(req.query as Record<string, unknown>),
+    publishedOnly: "true",
+  });
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Properties retrieved successfully",
+    meta,
+    data,
+  });
+});
+
 const getPropertyBySlug = catchAsync(async (req: Request, res: Response) => {
   const result = await PropertyService.getPropertyBySlug(req.params.slug);
   sendResponse(res, {
@@ -165,6 +184,7 @@ export const PropertyController = {
   createProperty,
   getAllProperties,
   getPropertyById,
+  getPublicProperties,
   getPropertyBySlug,
   updateProperty,
   changeStatus,

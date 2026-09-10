@@ -29,6 +29,34 @@ const getAllProjects = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+/**
+ * The website's read. `activeOnly` is forced — this route has no auth in
+ * front of it, and a development switched off in the panel is off everywhere.
+ */
+const getPublicProjects = catchAsync(async (req: Request, res: Response) => {
+  const { data, meta } = await ProjectService.getAllProjects({
+    ...(req.query as Record<string, unknown>),
+    activeOnly: "true",
+  });
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Projects retrieved successfully",
+    meta,
+    data,
+  });
+});
+
+const getProjectBySlug = catchAsync(async (req: Request, res: Response) => {
+  const result = await ProjectService.getProjectBySlug(req.params.slug);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Project retrieved successfully",
+    data: result,
+  });
+});
+
 const getProjectById = catchAsync(async (req: Request, res: Response) => {
   const result = await ProjectService.getProjectById(req.params.id);
   sendResponse(res, {
@@ -66,6 +94,8 @@ const deleteProject = catchAsync(async (req: Request, res: Response) => {
 export const ProjectController = {
   createProject,
   getAllProjects,
+  getPublicProjects,
+  getProjectBySlug,
   getProjectById,
   updateProject,
   deleteProject,

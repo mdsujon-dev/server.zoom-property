@@ -8,6 +8,12 @@ import { projectValidation } from "./project.validation";
 const router = Router();
 
 // Open to any signed-in user: the listing form needs the project dropdown.
+/* ── Public ─────────────────────────────────────────────────────────────
+   The website's reads. Mounted before "/:id" so "public" is never taken
+   for an id. */
+router.get("/public", ProjectController.getPublicProjects);
+router.get("/public/:slug", ProjectController.getProjectBySlug);
+
 router.get("/", auth(), ProjectController.getAllProjects);
 router.get("/:id", auth(), ProjectController.getProjectById);
 
