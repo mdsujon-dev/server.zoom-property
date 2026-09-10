@@ -5,6 +5,9 @@ import AppError from "../../errors/appError";
 import { diffFields, recordHistory } from "../history/history.service";
 import { IBlogCategory, IBlogPost } from "./blog.interface";
 import { BlogCategory, BlogPost } from "./blog.model";
+import User from "../auth/auth.model";
+// Registers the schema `bylineFor` populates against.
+import "../designation/designation.model";
 
 const liveFilter = { isDeleted: { $ne: true } };
 
@@ -34,11 +37,44 @@ const withRelations = <T>(q: T) =>
   (q as any)
     .populate({ path: "category", select: "_id name nameBn slug" })
     .populate({ path: "coverImage", select: "_id key" })
+    .populate({ path: "thumbnail", select: "_id key" })
     .populate({ path: "author.avatar", select: "_id key" }) as T;
+
+/**
+ * The byline, taken from whoever is writing.
+ *
+ * Copied rather than referenced: the byline records who wrote the article on
+ * the day it was written, and it should not rewrite itself because that person
+ * later changed their photograph, their title, or left.
+ *
+ * An explicit `author` in the payload still wins — a guest contributor gets a
+ * byline without needing a login.
+ */
+const bylineFor = async (
+  userId?: string,
+  provided?: Partial<IBlogPost>["author"]
+) => {
+  if (provided?.name) return provided;
+  if (!userId) return provided;
+
+  const user = await User.findById(userId)
+    .select("name profilePhoto designationId")
+    .populate({ path: "designationId", select: "name" })
+    .lean<{ name?: string; profilePhoto?: string; designationId?: { name?: string } }>();
+
+  if (!user?.name) return provided;
+
+  return {
+    name: user.name,
+    role: user.designationId?.name,
+    avatarUrl: user.profilePhoto,
+  };
+};
 
 const createPost = async (payload: Partial<IBlogPost>, createdBy?: string) => {
   const post = await BlogPost.create({
     ...payload,
+    author: await bylineFor(createdBy, payload.author),
     slug: await uniqueSlug(payload.title as string),
     readMinutes: readingTime(payload.content),
     publishedAt: payload.status === "published" ? new Date() : undefined,

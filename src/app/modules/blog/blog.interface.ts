@@ -15,7 +15,16 @@ export interface IPostAuthor {
   nameBn?: string;
   role?: string;
   roleBn?: string;
+  /** A media document, when somebody picked one deliberately. */
   avatar?: Types.ObjectId;
+  /**
+   * The writer's own profile photograph, copied at the moment of writing.
+   *
+   * A URL rather than a reference, and a copy rather than a lookup: the byline
+   * records who wrote the article on the day, and it should not change because
+   * that person later updated their photograph or left the company.
+   */
+  avatarUrl?: string;
 }
 
 export interface IBlogPost extends Document {
@@ -48,7 +57,16 @@ export interface IBlogPost extends Document {
   category: Types.ObjectId;
   tags: string[];
 
+  /** The wide image on the article page. */
   coverImage?: Types.ObjectId;
+  /**
+   * The card image on the index.
+   *
+   * Separate from the cover because the two crops are different jobs: a banner
+   * is wide and has text over it, a card is close and has to read at a couple
+   * of hundred pixels. Left empty, the card falls back to the cover.
+   */
+  thumbnail?: Types.ObjectId;
   author: IPostAuthor;
 
   /**

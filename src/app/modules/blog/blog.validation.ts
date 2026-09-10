@@ -3,6 +3,7 @@ import { z } from "zod";
 const objectId = z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid id");
 
 const author = z.object({
+  avatarUrl: z.string().optional(),
   name: z.string().min(1, "Author name is required"),
   nameBn: z.string().optional(),
   role: z.string().optional(),
@@ -34,7 +35,10 @@ const postFields = {
   tags: z.array(z.string()).optional(),
 
   coverImage: objectId.optional().nullable(),
-  author,
+
+  thumbnail: objectId.optional().nullable(),
+  // Optional: the API fills it in from the signed-in writer.
+  author: author.optional(),
 
   // `readMinutes`, `slug` and `publishedAt` are absent on purpose: all three
   // are derived on save, and a form that could set them could make the article

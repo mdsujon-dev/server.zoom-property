@@ -22,6 +22,8 @@ const authorSchema = new Schema(
     role: { type: String, trim: true },
     roleBn: { type: String, trim: true },
     avatar: { type: Schema.Types.ObjectId, ref: "Media" },
+    // The writer's own photograph, copied at the moment of writing.
+    avatarUrl: { type: String, trim: true },
   },
   { _id: false }
 );
@@ -47,7 +49,9 @@ const postSchema = new Schema<IBlogPost>(
     tags: { type: [String], default: [] },
 
     coverImage: { type: Schema.Types.ObjectId, ref: "Media" },
-    author: { type: authorSchema, required: true },
+    thumbnail: { type: Schema.Types.ObjectId, ref: "Media" },
+    // Not required: the API derives it from the signed-in writer.
+    author: { type: authorSchema },
 
     metaTitle: { type: String, trim: true },
     metaTitleBn: { type: String, trim: true },
