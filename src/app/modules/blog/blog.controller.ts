@@ -39,6 +39,24 @@ const getPostById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+/**
+ * The blog index, as the website reads it. `publishedOnly` is forced — a draft
+ * post is nobody's business outside the panel.
+ */
+const getPublicPosts = catchAsync(async (req: Request, res: Response) => {
+  const { data, meta } = await BlogService.getAllPosts({
+    ...(req.query as Record<string, unknown>),
+    publishedOnly: "true",
+  });
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Posts retrieved successfully",
+    meta,
+    data,
+  });
+});
+
 const getPostBySlug = catchAsync(async (req: Request, res: Response) => {
   const result = await BlogService.getPostBySlug(req.params.slug);
   sendResponse(res, {
@@ -119,6 +137,7 @@ export const BlogController = {
   createPost,
   getAllPosts,
   getPostById,
+  getPublicPosts,
   getPostBySlug,
   updatePost,
   deletePost,

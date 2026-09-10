@@ -29,6 +29,25 @@ const getAllReviews = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+/**
+ * The website's read. `publishedOnly` is forced rather than trusted from the
+ * query: this route has no auth in front of it, and a review goes up because
+ * somebody decided it should, not because it was submitted.
+ */
+const getPublicReviews = catchAsync(async (req: Request, res: Response) => {
+  const { data, meta } = await ReviewService.getAllReviews({
+    ...(req.query as Record<string, unknown>),
+    publishedOnly: "true",
+  });
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Reviews retrieved successfully",
+    meta,
+    data,
+  });
+});
+
 const getReviewById = catchAsync(async (req: Request, res: Response) => {
   const result = await ReviewService.getReviewById(req.params.id);
   sendResponse(res, {
@@ -79,6 +98,7 @@ const deleteReview = catchAsync(async (req: Request, res: Response) => {
 export const ReviewController = {
   createReview,
   getAllReviews,
+  getPublicReviews,
   getReviewById,
   updateReview,
   togglePublished,

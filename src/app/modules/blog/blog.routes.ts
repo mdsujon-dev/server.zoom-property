@@ -8,6 +8,7 @@ import { blogValidation } from "./blog.validation";
 const router = Router();
 
 // The website's read. Mounted first so "public" is never taken for an id.
+router.get("/public", BlogController.getPublicPosts);
 router.get("/public/:slug", BlogController.getPostBySlug);
 
 /* ── Categories ─────────────────────────────────────────────────────────

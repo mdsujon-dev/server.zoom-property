@@ -7,6 +7,11 @@ import { reviewValidation } from "./review.validation";
 
 const router = Router();
 
+/* ── Public ─────────────────────────────────────────────────────────────
+   The website's read. Mounted before "/:id" so "public" is never taken
+   for an id. */
+router.get("/public", ReviewController.getPublicReviews);
+
 router.get("/", auth(), ReviewController.getAllReviews);
 router.get("/:id", auth(), ReviewController.getReviewById);
 
