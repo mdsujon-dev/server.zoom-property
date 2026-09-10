@@ -41,14 +41,20 @@ const withRelations = <T>(q: T) =>
     .populate({ path: "author.avatar", select: "_id key" }) as T;
 
 /**
- * The byline, taken from whoever is writing.
+ * The byline, taken from whoever is working on the article.
  *
- * Copied rather than referenced: the byline records who wrote the article on
- * the day it was written, and it should not rewrite itself because that person
- * later changed their photograph, their title, or left.
+ * Set from the writer on create and reset from the editor on every update, so
+ * the name on the article is whoever last touched it. That is a deliberate
+ * choice: here the byline means "ask this person about it" rather than "this
+ * person typed the first draft", and a stale name sends the reader to somebody
+ * who no longer knows the piece.
  *
- * An explicit `author` in the payload still wins — a guest contributor gets a
- * byline without needing a login.
+ * Still copied rather than referenced — the values are written into the
+ * article, so an author changing their photograph later does not silently
+ * restyle every article they ever touched.
+ *
+ * An explicit `author` in the payload always wins, which is how a guest
+ * contributor keeps their byline through an editor's corrections.
  */
 const bylineFor = async (
   userId?: string,
@@ -142,7 +148,12 @@ const updatePost = async (
   if (!existing) throw new AppError(StatusCodes.NOT_FOUND, "Article not found");
 
   const changes = diffFields(existing.toObject(), payload);
-  const patch: Record<string, unknown> = { ...payload, updatedBy };
+  const patch: Record<string, unknown> = {
+    ...payload,
+    // Whoever is editing becomes the byline, unless the payload names one.
+    author: await bylineFor(updatedBy, payload.author),
+    updatedBy,
+  };
 
   if (payload.title && payload.title !== existing.title) {
     patch.slug = await uniqueSlug(payload.title, id);
