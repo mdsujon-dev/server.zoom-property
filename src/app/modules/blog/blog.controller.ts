@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { BlogService } from "./blog.service";
+import publicQuery from "../../utils/publicQuery";
 
 const userId = (req: Request) => (req as any).user?.userId;
 
@@ -45,7 +46,12 @@ const getPostById = catchAsync(async (req: Request, res: Response) => {
  */
 const getPublicPosts = catchAsync(async (req: Request, res: Response) => {
   const { data, meta } = await BlogService.getAllPosts({
-    ...(req.query as Record<string, unknown>),
+    ...publicQuery(req.query as Record<string, unknown>, [
+      "category",
+      "featured",
+      "trending",
+      "tags",
+    ]),
     publishedOnly: "true",
   });
   sendResponse(res, {

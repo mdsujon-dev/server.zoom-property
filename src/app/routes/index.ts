@@ -27,6 +27,7 @@ import { ServicesCountryRoutes } from "../modules/servicesCountry/servicesCountr
 import { SitemapRoutes } from "../modules/sitemap/sitemap.route";
 import { UserRoutes } from "../modules/user/user.routes";
 import { DynamicContentRoutes } from "../modules/dynamicContent/dynamicContent.route";
+import { ShowcaseVideoRoutes } from "../modules/showcaseVideo/showcaseVideo.routes";
 
 const router = Router();
 
@@ -70,6 +71,10 @@ const moduleRoutes = [
   {
     path: "/dynamic-content",
     route: DynamicContentRoutes,
+  },
+  {
+    path: "/showcase-videos",
+    route: ShowcaseVideoRoutes,
   },
   {
     path: "/sitemap",

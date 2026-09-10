@@ -4,8 +4,13 @@ import checkPermission from "../../middleware/permission";
 import validateRequest from "../../middleware/validateRequest";
 import { PropertyController } from "./property.controller";
 import { propertyValidation } from "./property.validation";
+import { revalidates } from "../../middleware/revalidates";
 
 const router = Router();
+
+// A successful write here means the website is showing something out of
+// date. See `middleware/revalidates`.
+router.use(revalidates("properties"));
 
 /* ── Public ─────────────────────────────────────────────────────────────
    The website's read. Unauthenticated on purpose, and answered only for

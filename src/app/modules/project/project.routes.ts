@@ -4,8 +4,13 @@ import checkPermission from "../../middleware/permission";
 import validateRequest from "../../middleware/validateRequest";
 import { ProjectController } from "./project.controller";
 import { projectValidation } from "./project.validation";
+import { revalidates } from "../../middleware/revalidates";
 
 const router = Router();
+
+// A successful write here means the website is showing something out of
+// date. See `middleware/revalidates`.
+router.use(revalidates("projects"));
 
 // Open to any signed-in user: the listing form needs the project dropdown.
 /* ── Public ─────────────────────────────────────────────────────────────

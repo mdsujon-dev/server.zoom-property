@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { ProjectService } from "./project.service";
+import publicQuery from "../../utils/publicQuery";
 
 const userId = (req: Request) => (req as any).user?.userId;
 
@@ -35,7 +36,13 @@ const getAllProjects = catchAsync(async (req: Request, res: Response) => {
  */
 const getPublicProjects = catchAsync(async (req: Request, res: Response) => {
   const { data, meta } = await ProjectService.getAllProjects({
-    ...(req.query as Record<string, unknown>),
+    ...publicQuery(req.query as Record<string, unknown>, [
+      "isHome",
+      "featured",
+      "area",
+      "stage",
+      "city",
+    ]),
     activeOnly: "true",
   });
   sendResponse(res, {

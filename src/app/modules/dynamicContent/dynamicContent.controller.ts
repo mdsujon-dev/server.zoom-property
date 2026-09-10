@@ -8,7 +8,7 @@ import { revalidateFrontend } from '../../utils/revalidateFrontend';
 const upsertContent = catchAsync(async (req: Request, res: Response) => {
   const userId = (req as any).user?.userId;
   const result = await DynamicContentService.upsertContent(req.body, userId);
-  revalidateFrontend();
+  revalidateFrontend("cms");
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -23,7 +23,7 @@ const bulkUpsertContents = catchAsync(async (req: Request, res: Response) => {
     req.body.contents,
     userId
   );
-  revalidateFrontend();
+  revalidateFrontend("cms");
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -58,7 +58,7 @@ const getContentsMap = catchAsync(async (req: Request, res: Response) => {
 
 const deleteContent = catchAsync(async (req: Request, res: Response) => {
   const result = await DynamicContentService.deleteContent(req.params.key);
-  revalidateFrontend();
+  revalidateFrontend("cms");
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -69,7 +69,7 @@ const deleteContent = catchAsync(async (req: Request, res: Response) => {
 
 const bulkDeleteContents = catchAsync(async (req: Request, res: Response) => {
   const result = await DynamicContentService.bulkDeleteContents(req.body.keys);
-  revalidateFrontend();
+  revalidateFrontend("cms");
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,

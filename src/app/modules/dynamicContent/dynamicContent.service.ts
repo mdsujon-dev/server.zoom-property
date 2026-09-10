@@ -94,7 +94,7 @@ const deleteContent = async (key: string) => {
 };
 
 const bulkDeleteContents = async (keys: string[]) => {
-  const result = await DynamicContent.deleteMany({ key: { in: keys } });
+  const result = await DynamicContent.deleteMany({ key: { $in: keys } });
   return { deletedCount: result.deletedCount };
 };
 

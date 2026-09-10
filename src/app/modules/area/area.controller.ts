@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { AreaService } from "./area.service";
+import publicQuery from "../../utils/publicQuery";
 
 const userId = (req: Request) => (req as any).user?.userId;
 
@@ -39,7 +40,11 @@ const getAllAreas = catchAsync(async (req: Request, res: Response) => {
  */
 const getPublicAreas = catchAsync(async (req: Request, res: Response) => {
   const { data, meta } = await AreaService.getAllAreas({
-    ...(req.query as Record<string, unknown>),
+    ...publicQuery(req.query as Record<string, unknown>, [
+      "isHome",
+      "featured",
+      "city",
+    ]),
     activeOnly: "true",
   });
   sendResponse(res, {

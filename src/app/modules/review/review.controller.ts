@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { ReviewService } from "./review.service";
+import publicQuery from "../../utils/publicQuery";
 
 const userId = (req: Request) => (req as any).user?.userId;
 
@@ -36,7 +37,7 @@ const getAllReviews = catchAsync(async (req: Request, res: Response) => {
  */
 const getPublicReviews = catchAsync(async (req: Request, res: Response) => {
   const { data, meta } = await ReviewService.getAllReviews({
-    ...(req.query as Record<string, unknown>),
+    ...publicQuery(req.query as Record<string, unknown>, ["featured", "rating"]),
     publishedOnly: "true",
   });
   sendResponse(res, {

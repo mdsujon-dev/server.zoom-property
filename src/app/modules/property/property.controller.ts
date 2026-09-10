@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { PropertyService } from "./property.service";
+import publicQuery from "../../utils/publicQuery";
 
 const userId = (req: Request) => (req as any).user?.userId;
 
@@ -50,7 +51,16 @@ const getPropertyById = catchAsync(async (req: Request, res: Response) => {
  */
 const getPublicProperties = catchAsync(async (req: Request, res: Response) => {
   const { data, meta } = await PropertyService.getAllProperties({
-    ...(req.query as Record<string, unknown>),
+    ...publicQuery(req.query as Record<string, unknown>, [
+      "isHome",
+      "featured",
+      "area",
+      "project",
+      "type",
+      "purpose",
+      "badge",
+      "city",
+    ]),
     publishedOnly: "true",
   });
   sendResponse(res, {

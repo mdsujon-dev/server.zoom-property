@@ -4,8 +4,13 @@ import checkPermission from "../../middleware/permission";
 import validateRequest from "../../middleware/validateRequest";
 import { BlogController } from "./blog.controller";
 import { blogValidation } from "./blog.validation";
+import { revalidates } from "../../middleware/revalidates";
 
 const router = Router();
+
+// A successful write here means the website is showing something out of
+// date. See `middleware/revalidates`.
+router.use(revalidates("insights"));
 
 // The website's read. Mounted first so "public" is never taken for an id.
 router.get("/public", BlogController.getPublicPosts);

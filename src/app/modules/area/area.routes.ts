@@ -4,8 +4,13 @@ import checkPermission from "../../middleware/permission";
 import validateRequest from "../../middleware/validateRequest";
 import { AreaController } from "./area.controller";
 import { areaValidation } from "./area.validation";
+import { revalidates } from "../../middleware/revalidates";
 
 const router = Router();
+
+// A successful write here means the website is showing something out of
+// date. See `middleware/revalidates`.
+router.use(revalidates("areas"));
 
 // Open to any signed-in user: the listing form, the project form and the agent
 // form all need the area dropdown.
