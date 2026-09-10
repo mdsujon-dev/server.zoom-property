@@ -42,8 +42,11 @@ export const isR2Configured = () =>
   );
 
 /** Public URL for a stored object key. */
-export const r2PublicUrl = (key: string) =>
-  `${R2_PUBLIC_URL}/${String(key).replace(/^\/+/, "")}`;
+export const r2PublicUrl = (key: string) => {
+  if (!key) return "";
+  if (/^(https?:)?\/\//i.test(key)) return key;
+  return `${R2_PUBLIC_URL}/${String(key).replace(/^\/+/, "")}`;
+};
 
 /** Does an object with this key already exist? (used for filename de-dup) */
 export const r2KeyExists = async (key: string): Promise<boolean> => {
