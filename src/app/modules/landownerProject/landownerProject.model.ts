@@ -1,19 +1,15 @@
 import { Schema, model } from "mongoose";
 
-import { ILandownerProject } from "./landownerProject.interface";
+import { ILandownerBlock } from "./landownerProject.interface";
 
-const landownerProjectSchema = new Schema<ILandownerProject>(
+const landownerBlockSchema = new Schema<ILandownerBlock>(
   {
-    name: { type: String, required: true, trim: true },
-    nameBn: { type: String, trim: true },
-    location: { type: String, trim: true },
-    locationBn: { type: String, trim: true },
+    title: { type: String, required: true, trim: true },
+    titleBn: { type: String, trim: true },
 
-    landSizeKatha: { type: Number, min: 0 },
-    floors: { type: Number, min: 0 },
-    // A share outside 0-100 is a typo, not a deal.
-    ownerSharePercent: { type: Number, min: 0, max: 100 },
-    completedYear: { type: Number, min: 1900 },
+    // HTML from the editor. Not trimmed: leading markup is meaningful.
+    description: { type: String },
+    descriptionBn: { type: String },
 
     image: { type: Schema.Types.ObjectId, ref: "Media" },
 
@@ -28,12 +24,12 @@ const landownerProjectSchema = new Schema<ILandownerProject>(
   { timestamps: true }
 );
 
-// The page reads in the desk's order, newest handover first within it.
-landownerProjectSchema.index({ order: 1, completedYear: -1 });
+// The page reads in the desk's order, newest first within it.
+landownerBlockSchema.index({ order: 1, createdAt: -1 });
 
-export const LandownerProject = model<ILandownerProject>(
+export const LandownerProject = model<ILandownerBlock>(
   "LandownerProject",
-  landownerProjectSchema
+  landownerBlockSchema
 );
 
 export default LandownerProject;

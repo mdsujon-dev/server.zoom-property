@@ -1,31 +1,30 @@
 import { Document, Types } from "mongoose";
 
 /**
- * A completed joint venture, shown to landowners as evidence.
+ * One block on the landowners page: a photograph, a heading, and a passage.
  *
- * Its own collection rather than a `Project` with a flag: a JV case study is a
- * finished building being cited, not a development being sold. It carries the
- * landowner's share and the year it was handed over - numbers no listing has -
- * and it stays on the page long after the units are gone.
+ * Three fields and no more. What a landowner needs to read varies - the terms,
+ * the guarantees, a finished building - and pinning that to a fixed set of
+ * columns meant every block had to be the same kind of thing. A heading and a
+ * body the desk can format covers all of them.
+ *
+ * `description` is HTML from the panel's editor, not plain text: the desk
+ * writes lists and bold terms here, and flattening those to a string would
+ * throw the formatting away on save.
  */
-export interface ILandownerProject extends Document {
-  name: string;
-  nameBn?: string;
-  location?: string;
-  locationBn?: string;
+export interface ILandownerBlock extends Document {
+  title: string;
+  titleBn?: string;
 
-  /** Plot size in katha, as land is measured here. */
-  landSizeKatha?: number;
-  floors?: number;
-  /** The landowner's share of the finished building, per cent. */
-  ownerSharePercent?: number;
-  completedYear?: number;
+  /** HTML from the panel's rich-text editor. */
+  description?: string;
+  descriptionBn?: string;
 
   image?: Types.ObjectId;
 
   /** Unpublished by default - a case study goes up when somebody decides. */
   isPublished: boolean;
-  /** Picked for the landowners page's headline row. */
+  /** Shown on the landowners page. */
   isHome: boolean;
   order: number;
 

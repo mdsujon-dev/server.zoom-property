@@ -16,7 +16,7 @@ const createProject = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
     success: true,
-    message: "Case study created successfully",
+    message: "Block created successfully",
     data: result,
   });
 });
@@ -28,7 +28,7 @@ const getAllProjects = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "Case studies retrieved successfully",
+    message: "Blocks retrieved successfully",
     meta,
     data,
   });
@@ -46,7 +46,7 @@ const getPublicProjects = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "Case studies retrieved successfully",
+    message: "Blocks retrieved successfully",
     meta,
     data,
   });
@@ -57,7 +57,7 @@ const getProjectById = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "Case study retrieved successfully",
+    message: "Block retrieved successfully",
     data: result,
   });
 });
@@ -71,7 +71,7 @@ const updateProject = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "Case study updated successfully",
+    message: "Block updated successfully",
     data: result,
   });
 });
@@ -84,7 +84,7 @@ const deleteProject = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "Case study deleted successfully",
+    message: "Block deleted successfully",
     data: result,
   });
 });

@@ -3,15 +3,13 @@ import { z } from "zod";
 const objectId = z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid id");
 
 const fields = {
-  name: z.string().min(1, "Name is required"),
-  nameBn: z.string().optional(),
-  location: z.string().optional(),
-  locationBn: z.string().optional(),
+  title: z.string().min(1, "Title is required"),
+  titleBn: z.string().optional(),
 
-  landSizeKatha: z.number().min(0).optional().nullable(),
-  floors: z.number().min(0).optional().nullable(),
-  ownerSharePercent: z.number().min(0).max(100).optional().nullable(),
-  completedYear: z.number().min(1900).optional().nullable(),
+  // HTML from the editor, so no trim and no length ceiling that would cut a
+  // passage off mid-tag.
+  description: z.string().optional(),
+  descriptionBn: z.string().optional(),
 
   image: objectId.optional().nullable(),
 

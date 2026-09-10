@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../errors/appError";
 import { diffFields, recordHistory } from "../history/history.service";
-import { ILandownerProject } from "./landownerProject.interface";
+import { ILandownerBlock } from "./landownerProject.interface";
 import { LandownerProject } from "./landownerProject.model";
 
 const liveFilter = { isDeleted: { $ne: true } };
@@ -12,7 +12,7 @@ const withRelations = <T>(q: T) =>
   (q as any).populate({ path: "image", select: "_id key" }) as T;
 
 const createProject = async (
-  payload: Partial<ILandownerProject>,
+  payload: Partial<ILandownerBlock>,
   createdBy?: string
 ) => {
   const project = await LandownerProject.create({ ...payload, createdBy });
@@ -36,7 +36,7 @@ const getAllProjects = async (query: Record<string, unknown>) => {
     withRelations(LandownerProject.find(baseFilter)),
     { sort: "order", ...restQuery }
   )
-    .search(["name", "nameBn", "location"])
+    .search(["title", "titleBn"])
     .filter()
     .sort()
     .paginate()
@@ -54,17 +54,17 @@ const getProjectById = async (id: string) => {
   const project = await withRelations(
     LandownerProject.findOne({ _id: id, ...liveFilter })
   );
-  if (!project) throw new AppError(StatusCodes.NOT_FOUND, "Case study not found");
+  if (!project) throw new AppError(StatusCodes.NOT_FOUND, "Block not found");
   return project;
 };
 
 const updateProject = async (
   id: string,
-  payload: Partial<ILandownerProject>,
+  payload: Partial<ILandownerBlock>,
   updatedBy?: string
 ) => {
   const before = await LandownerProject.findOne({ _id: id, ...liveFilter });
-  if (!before) throw new AppError(StatusCodes.NOT_FOUND, "Case study not found");
+  if (!before) throw new AppError(StatusCodes.NOT_FOUND, "Block not found");
 
   const project = await withRelations(
     LandownerProject.findOneAndUpdate(
@@ -92,7 +92,7 @@ const deleteProject = async (id: string, deletedBy?: string) => {
     { isDeleted: true, isPublished: false, updatedBy: deletedBy },
     { new: true }
   );
-  if (!project) throw new AppError(StatusCodes.NOT_FOUND, "Case study not found");
+  if (!project) throw new AppError(StatusCodes.NOT_FOUND, "Block not found");
 
   await recordHistory({
     entity: "LandownerProject",
