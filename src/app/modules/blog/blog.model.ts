@@ -69,6 +69,7 @@ const postSchema = new Schema<IBlogPost>(
     publishedAt: { type: Date },
 
     featured: { type: Boolean, default: false, index: true },
+    isHome: { type: Boolean, default: false, index: true },
     trending: { type: Boolean, default: false },
     views: { type: Number, default: 0 },
 

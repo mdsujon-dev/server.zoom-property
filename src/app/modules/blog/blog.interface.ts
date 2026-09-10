@@ -84,6 +84,17 @@ export interface IBlogPost extends Document {
   /** The one article the blog index leads on. */
   featured: boolean;
   trending: boolean;
+  /**
+   * Picked for the home page's blog strip.
+   *
+   * A separate decision from `featured`, which leads the blog index. What
+   * belongs on the front of the site and what leads the blog are different
+   * editorial calls, and one flag doing both means neither can be set
+   * independently.
+   *
+   * Nothing ticked, and the strip falls back to the newest published.
+   */
+  isHome: boolean;
   views: number;
 
   isDeleted: boolean;

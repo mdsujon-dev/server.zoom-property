@@ -50,6 +50,7 @@ const getPublicPosts = catchAsync(async (req: Request, res: Response) => {
       "category",
       "featured",
       "trending",
+      "isHome",
       "tags",
     ]),
     publishedOnly: "true",

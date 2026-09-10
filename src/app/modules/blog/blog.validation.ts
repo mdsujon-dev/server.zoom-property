@@ -45,6 +45,7 @@ const postFields = {
   // disagree with itself.
   status: z.enum(["draft", "published"]).optional(),
   featured: z.boolean().optional(),
+  isHome: z.boolean().optional(),
   trending: z.boolean().optional(),
 };
 
