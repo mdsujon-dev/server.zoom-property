@@ -54,7 +54,7 @@ export interface IBlogPost extends Document {
   metaDescription?: string;
   metaDescriptionBn?: string;
 
-  category: Types.ObjectId;
+  categories: Types.ObjectId[];
   tags: string[];
 
   /** The wide image on the article page. */

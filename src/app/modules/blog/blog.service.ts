@@ -35,7 +35,7 @@ const readingTime = (html?: string) => {
 
 const withRelations = <T>(q: T) =>
   (q as any)
-    .populate({ path: "category", select: "_id name nameBn slug" })
+    .populate({ path: "categories", select: "_id name nameBn slug" })
     .populate({ path: "coverImage", select: "_id key" })
     .populate({ path: "thumbnail", select: "_id key" })
     .populate({ path: "author.avatar", select: "_id key" }) as T;
@@ -231,7 +231,7 @@ const updateCategory = async (id: string, payload: Partial<IBlogCategory>) => {
  * URL, which nobody has.
  */
 const deleteCategory = async (id: string) => {
-  const inUse = await BlogPost.countDocuments({ category: id, ...liveFilter });
+  const inUse = await BlogPost.countDocuments({ categories: id, ...liveFilter });
   if (inUse) {
     throw new AppError(
       StatusCodes.CONFLICT,

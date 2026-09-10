@@ -31,7 +31,7 @@ const postFields = {
     .optional(),
   metaDescriptionBn: z.string().max(160).optional(),
 
-  category: objectId,
+  categories: z.array(objectId).min(1, "At least one category is required"),
   tags: z.array(z.string()).optional(),
 
   coverImage: objectId.optional().nullable(),

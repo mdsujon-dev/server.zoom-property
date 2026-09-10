@@ -40,12 +40,13 @@ const postSchema = new Schema<IBlogPost>(
     content: { type: String },
     contentBn: { type: String },
 
-    category: {
-      type: Schema.Types.ObjectId,
-      ref: "BlogCategory",
-      required: true,
-      index: true,
-    },
+    categories: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "BlogCategory",
+        index: true,
+      }
+    ],
     tags: { type: [String], default: [] },
 
     coverImage: { type: Schema.Types.ObjectId, ref: "Media" },

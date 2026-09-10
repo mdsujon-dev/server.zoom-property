@@ -17,6 +17,7 @@
     "seed:amenities": "ts-node src/scripts/seedAmenities.ts",
     "seed:landowners": "ts-node src/scripts/seedLandownerBlocks.ts",
     "seed:blog": "ts-node src/scripts/seedBlog.ts",
+    "seed:social": "ts-node src/scripts/seedSocialLinks.ts",
     "postman": "ts-node --transpile-only postman/generate.ts"
   },
   "dependencies": {
