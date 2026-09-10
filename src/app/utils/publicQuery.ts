@@ -15,7 +15,7 @@
  * `page`, `limit`, `sort`, `fields` and `searchTerm` are always allowed —
  * paging and sorting reveal nothing the rows do not.
  */
-const ALWAYS = ["page", "limit", "sort", "fields", "searchTerm"] as const;
+const ALWAYS = ["page", "limit", "sort", "fields", "searchTerm", "q"] as const;
 
 export const publicQuery = (
   query: Record<string, unknown>,
