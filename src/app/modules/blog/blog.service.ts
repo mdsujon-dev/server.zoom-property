@@ -148,12 +148,14 @@ const updatePost = async (
   if (!existing) throw new AppError(StatusCodes.NOT_FOUND, "Article not found");
 
   const changes = diffFields(existing.toObject(), payload);
-  const patch: Record<string, unknown> = {
-    ...payload,
-    // Whoever is editing becomes the byline, unless the payload names one.
-    author: await bylineFor(updatedBy, payload.author),
-    updatedBy,
-  };
+  const patch: Record<string, unknown> = { ...payload, updatedBy };
+
+  // Whoever is editing becomes the byline, unless the payload names one.
+  // Only assigned when it actually resolved — an unresolvable user must leave
+  // the existing byline alone rather than blank it.
+  const byline = await bylineFor(updatedBy, payload.author);
+  if (byline?.name) patch.author = byline;
+  else delete patch.author;
 
   if (payload.title && payload.title !== existing.title) {
     patch.slug = await uniqueSlug(payload.title, id);
