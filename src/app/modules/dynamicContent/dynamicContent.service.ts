@@ -21,7 +21,15 @@ async function upsertWithHistory(payload: UpsertPayload, userId?: string) {
 
   const saved = await DynamicContent.findOneAndUpdate(
     { key },
-    { $set: update, $setOnInsert: { key } },
+    {
+      $set: update,
+      // `isActive` is set here rather than left to the schema default. The
+      // default was not landing on upsert, so rows written by the panel came
+      // out with the field undefined — and the website's read filters on
+      // `isActive: true`, which meant every edit saved fine and none of it
+      // ever reached a visitor.
+      $setOnInsert: { key, isActive: true },
+    },
     { new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true }
   );
 
@@ -67,13 +75,15 @@ const bulkUpsertContents = async (
 
 // Public read — used by frontend to render a section. Only active items.
 const getContentsByGroup = async (group: string) => {
-  return DynamicContent.find({ group, isActive: true }).lean();
+  // `$ne: false` rather than `=== true`: only an explicit deactivation
+  // should hide a row. A missing flag is an older write, not a decision.
+  return DynamicContent.find({ group, isActive: { $ne: false } }).lean();
 };
 
 // Convenience shape for the frontend: `{ [key]: contentDoc }`. Optional
 // group filter narrows to a single page/section.
 const getContentsMap = async (group?: string) => {
-  const where: Record<string, unknown> = { isActive: true };
+  const where: Record<string, unknown> = { isActive: { $ne: false } };
   if (group) where.group = group;
 
   const contents = await DynamicContent.find(where).lean();
