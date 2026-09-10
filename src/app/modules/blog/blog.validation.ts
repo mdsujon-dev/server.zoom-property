@@ -20,6 +20,16 @@ const postFields = {
   content: z.string().optional(),
   contentBn: z.string().optional(),
 
+  // Capped at what a search engine will actually print, so the desk finds out
+  // here rather than from a truncated result page.
+  metaTitle: z.string().max(70, "Keep the meta title under 70 characters").optional(),
+  metaTitleBn: z.string().max(70).optional(),
+  metaDescription: z
+    .string()
+    .max(160, "Keep the meta description under 160 characters")
+    .optional(),
+  metaDescriptionBn: z.string().max(160).optional(),
+
   category: objectId,
   tags: z.array(z.string()).optional(),
 

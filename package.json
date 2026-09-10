@@ -15,6 +15,8 @@
     "migrate:project-stages": "ts-node src/scripts/migrateProjectStages.ts",
     "seed:listings": "ts-node src/scripts/seedDemoListings.ts",
     "seed:amenities": "ts-node src/scripts/seedAmenities.ts",
+    "seed:landowners": "ts-node src/scripts/seedLandownerBlocks.ts",
+    "seed:blog": "ts-node src/scripts/seedBlog.ts",
     "postman": "ts-node --transpile-only postman/generate.ts"
   },
   "dependencies": {

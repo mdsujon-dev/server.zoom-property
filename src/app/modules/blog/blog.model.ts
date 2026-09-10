@@ -49,6 +49,11 @@ const postSchema = new Schema<IBlogPost>(
     coverImage: { type: Schema.Types.ObjectId, ref: "Media" },
     author: { type: authorSchema, required: true },
 
+    metaTitle: { type: String, trim: true },
+    metaTitleBn: { type: String, trim: true },
+    metaDescription: { type: String, trim: true },
+    metaDescriptionBn: { type: String, trim: true },
+
     readMinutes: { type: Number, default: 1, min: 1 },
 
     status: {

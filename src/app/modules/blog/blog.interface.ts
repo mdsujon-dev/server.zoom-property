@@ -32,6 +32,19 @@ export interface IBlogPost extends Document {
   content?: string;
   contentBn?: string;
 
+  /**
+   * What a search result and a shared link show.
+   *
+   * Separate from `title` and `excerpt` on purpose: a headline is written to
+   * be read on the page, where the section around it supplies the context. A
+   * search result has no context, so it is often a different sentence. Left
+   * blank, the site falls back to the title and the excerpt.
+   */
+  metaTitle?: string;
+  metaTitleBn?: string;
+  metaDescription?: string;
+  metaDescriptionBn?: string;
+
   category: Types.ObjectId;
   tags: string[];
 
