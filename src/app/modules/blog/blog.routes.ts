@@ -14,6 +14,7 @@ router.use(revalidates("insights"));
 
 // The website's read. Mounted first so "public" is never taken for an id.
 router.get("/public", BlogController.getPublicPosts);
+router.get("/categories/public", BlogController.getPublicCategories);
 router.get("/public/:slug", BlogController.getPostBySlug);
 
 /* ── Categories ─────────────────────────────────────────────────────────

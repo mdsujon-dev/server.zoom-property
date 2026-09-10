@@ -110,6 +110,16 @@ const listCategories = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getPublicCategories = catchAsync(async (req: Request, res: Response) => {
+  const result = await BlogService.listCategories({ activeOnly: "true" });
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Categories retrieved successfully",
+    data: result,
+  });
+});
+
 const createCategory = catchAsync(async (req: Request, res: Response) => {
   const result = await BlogService.createCategory(req.body);
   sendResponse(res, {
@@ -149,6 +159,7 @@ export const BlogController = {
   updatePost,
   deletePost,
   listCategories,
+  getPublicCategories,
   createCategory,
   updateCategory,
   deleteCategory,
