@@ -27,6 +27,7 @@ export type RevalidateTag =
   | "reviews"
   | "insights"
   | "videos"
+  | "landowners"
   | "cms";
 
 export const revalidateFrontend = async (

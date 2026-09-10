@@ -144,6 +144,10 @@ const DOMAIN_MODULES: { module: string; description: string }[] = [
     description: "The agency's own name, logo, contact and ID card designs",
   },
   {
+    module: "Landowners",
+    description: "Joint-venture case studies shown to landowners",
+  },
+  {
     module: "Showcase Videos",
     description: "Films on the home page video carousel",
   },
