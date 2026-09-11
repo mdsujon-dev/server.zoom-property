@@ -55,6 +55,11 @@ export const PropertyAmenity = model<IOptionList>(
   optionListSchema()
 );
 
+export const PropertyType = model<IOptionList>(
+  "PropertyType",
+  optionListSchema()
+);
+
 /* ── Property ───────────────────────────────────────────────────────────── */
 const propertySchema = new Schema<IProperty>(
   {
@@ -66,7 +71,6 @@ const propertySchema = new Schema<IProperty>(
     purpose: { type: String, enum: PURPOSES, required: true, index: true },
     type: {
       type: String,
-      enum: PROPERTY_TYPES,
       required: true,
       index: true,
     },

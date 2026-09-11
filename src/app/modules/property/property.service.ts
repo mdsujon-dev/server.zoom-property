@@ -5,7 +5,7 @@ import AppError from "../../errors/appError";
 import { nextSequence } from "../../shared/counter.model";
 import { diffFields, recordHistory } from "../history/history.service";
 import { IProperty } from "./property.interface";
-import { Property, PropertyAmenity } from "./property.model";
+import { Property, PropertyAmenity, PropertyType } from "./property.model";
 
 // Every read excludes soft-deleted rows; nothing here ever hard-deletes.
 const liveFilter = { isDeleted: { $ne: true } };
@@ -13,6 +13,7 @@ const liveFilter = { isDeleted: { $ne: true } };
 /** The lists this module manages, by the word the URL uses. */
 const OPTION_MODELS = {
   amenities: PropertyAmenity,
+  types: PropertyType,
 } as const;
 
 type OptionKind = keyof typeof OPTION_MODELS;
@@ -312,6 +313,20 @@ const deleteOption = async (kind: string, id: string) => {
       throw new AppError(
         StatusCodes.CONFLICT,
         `${inUse} listing(s) use this amenity. Deactivate it instead.`
+      );
+    }
+  } else if (kind === "types") {
+    const option = await optionModel(kind).findById(id);
+    if (!option) throw new AppError(StatusCodes.NOT_FOUND, "Option not found");
+    
+    const inUse = await Property.countDocuments({
+      type: option.name,
+      ...liveFilter,
+    });
+    if (inUse) {
+      throw new AppError(
+        StatusCodes.CONFLICT,
+        `${inUse} listing(s) use this property type. Deactivate it instead.`
       );
     }
   }
