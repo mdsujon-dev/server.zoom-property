@@ -5,6 +5,10 @@ export interface IContactMessage {
   subject: string;
   message: string;
   type?: string;
+  enquiry?: string;
+  area?: string;
+  budget?: string;
+  source?: string;
 }
 
 export interface IQuotationRequest {

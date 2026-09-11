@@ -3,6 +3,7 @@ import { activityNotifier } from "../middleware/activityNotifier";
 import { ActionLogRoutes } from "../modules/actionLog/actionLog.route";
 import { AreaRoutes } from "../modules/area/area.routes";
 import { BlogRoutes } from "../modules/blog/blog.routes";
+import { BlogCommentRoutes } from "../modules/blogComment/blogComment.routes";
 import { AuthRoutes } from "../modules/auth/auth.routes";
 import { CountryRoutes } from "../modules/country/country.routes";
 import { DashboardRoutes } from "../modules/dashboard/dashboard.routes";
@@ -117,6 +118,10 @@ const moduleRoutes = [
   {
     path: "/blog",
     route: BlogRoutes,
+  },
+  {
+    path: "/blog-comments",
+    route: BlogCommentRoutes,
   },
   {
     path: "/reviews",

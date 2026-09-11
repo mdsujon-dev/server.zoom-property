@@ -7,9 +7,13 @@ export const createContactMessage = z.object({
     name: z.string().min(1, "Name is required"),
     email: z.string().email("Invalid email format"),
     phone: z.string({ required_error: "Phone is required" }),
-    subject: z.string({ required_error: "Subject is required" }),
+    subject: z.string().optional(),
     message: z.string({ required_error: "Message is required" }),
     type: z.string().optional(),
+    enquiry: z.string().optional(),
+    area: z.string().optional(),
+    budget: z.string().optional(),
+    source: z.string().optional(),
   }),
 });
 
