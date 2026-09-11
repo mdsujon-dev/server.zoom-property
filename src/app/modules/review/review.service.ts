@@ -27,9 +27,10 @@ const createReview = async (payload: Partial<IReview>, createdBy?: string) => {
 };
 
 const getAllReviews = async (query: Record<string, unknown>) => {
-  const { publishedOnly, ...restQuery } = query;
+  const { publishedOnly, videoOnly, ...restQuery } = query;
   const baseFilter: Record<string, unknown> = { ...liveFilter };
   if (publishedOnly === "true") baseFilter.isPublished = true;
+  if (videoOnly === "true") baseFilter["video.youtubeUrl"] = { $exists: true, $ne: "" };
 
   const reviewQuery = new QueryBuilder(
     withRelations(Review.find(baseFilter)),

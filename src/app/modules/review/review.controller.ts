@@ -41,6 +41,7 @@ const getPublicReviews = catchAsync(async (req: Request, res: Response) => {
       "featured",
       "rating",
       "isHome",
+      "videoOnly",
     ]),
     publishedOnly: "true",
   });
