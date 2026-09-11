@@ -22,7 +22,7 @@ router.get("/public/:slug", PropertyController.getPropertyBySlug);
 /* ── Managed option lists ───────────────────────────────────────────────
    `:kind` is `amenities` today. Mounted before "/:id" so the word is never
    read as a listing id. */
-router.get("/options/:kind", auth(), PropertyController.listOptions);
+router.get("/options/:kind", PropertyController.listOptions);
 router.post(
   "/options/:kind",
   auth(),

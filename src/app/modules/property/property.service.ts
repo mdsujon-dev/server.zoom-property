@@ -279,8 +279,41 @@ const expireStaleListings = async () => {
 
 const listOptions = async (kind: string, query: Record<string, unknown>) => {
   const model = optionModel(kind);
-  const filter = query.activeOnly === "true" ? { isActive: true } : {};
-  return model.find(filter).sort({ order: 1, name: 1 });
+  const filter: Record<string, unknown> =
+    query.activeOnly === "true" ? { isActive: true } : {};
+  const searchTerm = String(query.searchTerm || "").trim();
+  const hasPagination =
+    query.page !== undefined ||
+    query.limit !== undefined ||
+    query.searchTerm !== undefined;
+
+  if (!hasPagination) {
+    const data = await model.find(filter).sort({ order: 1, name: 1 });
+    return { data, meta: undefined };
+  }
+
+  const page = Math.max(Number(query.page) || 1, 1);
+  const limit = Math.min(Math.max(Number(query.limit) || 10, 1), 100);
+
+  if (searchTerm) {
+    filter.$or = ["name", "nameBn", "icon", "description"].map((field) => ({
+      [field]: { $regex: searchTerm, $options: "i" },
+    }));
+  }
+
+  const [data, total] = await Promise.all([
+    model
+      .find(filter)
+      .sort({ order: 1, name: 1 })
+      .skip((page - 1) * limit)
+      .limit(limit),
+    model.countDocuments(filter),
+  ]);
+
+  return {
+    data,
+    meta: { page, limit, total, totalPage: Math.ceil(total / limit) },
+  };
 };
 
 const createOption = async (kind: string, payload: Record<string, unknown>) =>

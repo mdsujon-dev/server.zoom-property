@@ -16,7 +16,12 @@ export type PropertyType =
   | "duplex"
   | "house"
   | "commercial"
-  | "land";
+  | "land"
+  | "studio"
+  | "warehouse"
+  | "shop"
+  | "sublet"
+  | "garage";
 
 /**
  * Where the listing is in its life.

@@ -20,6 +20,7 @@
     "seed:social": "ts-node src/scripts/seedSocialLinks.ts",
     "seed:reviews": "ts-node src/scripts/seedReviews.ts",
     "seed:projects": "ts-node src/scripts/seedProjects.ts",
+    "seed:types": "ts-node src/scripts/seedPropertyTypes.ts",
     "seed:chrome": "ts-node src/scripts/seedSiteChrome.ts",
     "postman": "ts-node --transpile-only postman/generate.ts"
   },

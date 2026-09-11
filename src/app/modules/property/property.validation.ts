@@ -11,6 +11,11 @@ const propertyType = z.enum([
   "house",
   "commercial",
   "land",
+  "studio",
+  "warehouse",
+  "shop",
+  "sublet",
+  "garage",
 ]);
 const status = z.enum([
   "draft",

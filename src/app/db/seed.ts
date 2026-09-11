@@ -9,6 +9,7 @@ import { UserRole } from "../modules/auth/auth.interface";
 import User from "../modules/auth/auth.model";
 import seedDesignations from "./seedDesignations";
 import seedRole from "./seedRole";
+import { seedPropertyTypes } from "../../scripts/seedPropertyTypes";
 
 const adminUserBase = {
   email: config.admin_email as string,
@@ -62,6 +63,7 @@ const seedAdmin = async () => {
     // The agent designation vocabulary. Independent of
     // the admin account, but this is the one seed that always runs.
     await seedDesignations();
+    await seedPropertyTypes();
 
     // 2) Create the admin user linked to that role + designation (+ phone).
     const isAdminExist = await User.findOne({ email: adminUserBase.email });

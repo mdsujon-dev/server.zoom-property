@@ -149,7 +149,8 @@ const listOptions = catchAsync(async (req: Request, res: Response) => {
     statusCode: StatusCodes.OK,
     success: true,
     message: "Options retrieved successfully",
-    data: result,
+    data: result.data,
+    meta: result.meta,
   });
 });
 
