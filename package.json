@@ -19,6 +19,7 @@
     "seed:blog": "ts-node src/scripts/seedBlog.ts",
     "seed:social": "ts-node src/scripts/seedSocialLinks.ts",
     "seed:reviews": "ts-node src/scripts/seedReviews.ts",
+    "seed:projects": "ts-node src/scripts/seedProjects.ts",
     "postman": "ts-node --transpile-only postman/generate.ts"
   },
   "dependencies": {
