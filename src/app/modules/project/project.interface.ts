@@ -92,6 +92,8 @@ export interface IProject extends Document {
    * an editorial decision that should survive someone reordering the list.
    */
   isHome: boolean;
+  /** Picked for the compact project list in the site footer. */
+  isFooter: boolean;
   isActive: boolean;
   isDeleted: boolean;
   createdBy?: Types.ObjectId;

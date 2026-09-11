@@ -56,6 +56,7 @@ const projectFields = {
 
   featured: z.boolean().optional(),
   isHome: z.boolean().optional(),
+  isFooter: z.boolean().optional(),
   order: z.number().optional(),
   isActive: z.boolean().optional(),
 };

@@ -59,6 +59,7 @@ const projectSchema = new Schema<IProject>(
     isHome: { type: Boolean, default: false, index: true },
     order: { type: Number, default: 0 },
     isActive: { type: Boolean, default: true, index: true },
+    isFooter: { type: Boolean, default: false, index: true },
     isDeleted: { type: Boolean, default: false, index: true },
     createdBy: { type: Schema.Types.ObjectId, ref: "User" },
     updatedBy: { type: Schema.Types.ObjectId, ref: "User" },
