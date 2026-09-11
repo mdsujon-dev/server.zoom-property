@@ -37,7 +37,11 @@ const getAllReviews = catchAsync(async (req: Request, res: Response) => {
  */
 const getPublicReviews = catchAsync(async (req: Request, res: Response) => {
   const { data, meta } = await ReviewService.getAllReviews({
-    ...publicQuery(req.query as Record<string, unknown>, ["featured", "rating"]),
+    ...publicQuery(req.query as Record<string, unknown>, [
+      "featured",
+      "rating",
+      "isHome",
+    ]),
     publishedOnly: "true",
   });
   sendResponse(res, {

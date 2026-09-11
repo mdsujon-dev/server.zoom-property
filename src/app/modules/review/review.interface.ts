@@ -40,6 +40,13 @@ export interface IReview extends Document {
   /** Nothing appears on the site until somebody approves it. */
   isPublished: boolean;
   featured: boolean;
+  /**
+   * Picked for the home page.
+   *
+   * Nothing ticked and the home strip falls back to the newest published
+   * reviews, so the block is never empty while the desk decides.
+   */
+  isHome: boolean;
   order: number;
 
   isDeleted: boolean;

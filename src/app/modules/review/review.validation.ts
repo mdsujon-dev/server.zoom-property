@@ -1,6 +1,12 @@
 import { z } from "zod";
 
+import { optionalUrl as optionalUrlSchema } from "../../utils/optionalUrl";
+
 const objectId = z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid id");
+
+// The shared validator: it accepts a bare address, pulls `src` out of a pasted
+// embed, and treats an empty box as "not set" rather than as a bad URL.
+const optionalUrl = optionalUrlSchema;
 
 const reviewFields = {
   clientName: z.string().min(1, "Client name is required"),
@@ -19,7 +25,7 @@ const reviewFields = {
 
   video: z
     .object({
-      youtubeUrl: z.string().url("Enter a valid URL").optional().or(z.literal("")),
+      youtubeUrl: optionalUrl,
       poster: objectId.optional().nullable(),
       duration: z.string().optional(),
     })
@@ -27,6 +33,7 @@ const reviewFields = {
 
   isPublished: z.boolean().optional(),
   featured: z.boolean().optional(),
+  isHome: z.boolean().optional(),
   order: z.number().optional(),
 };
 

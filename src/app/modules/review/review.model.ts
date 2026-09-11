@@ -27,6 +27,7 @@ const reviewSchema = new Schema<IReview>(
     // should, not because it was typed in.
     isPublished: { type: Boolean, default: false, index: true },
     featured: { type: Boolean, default: false, index: true },
+    isHome: { type: Boolean, default: false, index: true },
     order: { type: Number, default: 0 },
 
     isDeleted: { type: Boolean, default: false, index: true },
