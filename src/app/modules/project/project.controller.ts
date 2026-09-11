@@ -38,6 +38,7 @@ const getPublicProjects = catchAsync(async (req: Request, res: Response) => {
   const { data, meta } = await ProjectService.getAllProjects({
     ...publicQuery(req.query as Record<string, unknown>, [
       "isHome",
+      "isFooter",
       "featured",
       "area",
       "stage",
