@@ -98,9 +98,17 @@ const getAllProperties = async (
 ) => {
   // `publishedOnly=true` is what the public site asks for: a draft or an
   // archived listing is nobody's business outside the panel.
-  const { publishedOnly, ...restQuery } = query;
+  const { publishedOnly, min, max, q, ...restQuery } = query;
   let baseFilter: Record<string, unknown> = { ...liveFilter };
   if (publishedOnly === "true") baseFilter.status = "available";
+
+  if (q && !restQuery.searchTerm) restQuery.searchTerm = q;
+  if (min !== undefined || max !== undefined) {
+    restQuery.price = {
+      ...(min !== undefined ? { $gte: Number(min) } : {}),
+      ...(max !== undefined ? { $lte: Number(max) } : {}),
+    };
+  }
 
   const propertyQuery = new QueryBuilder(
     withRelations(Property.find(baseFilter)),
