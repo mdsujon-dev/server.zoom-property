@@ -3,6 +3,8 @@ import { IAgent } from "./agent.interface";
 
 const agentSchema = new Schema<IAgent>(
   {
+    agentId: { type: String, required: true, unique: true },
+    slug: { type: String, required: true, unique: true },
     name: { type: String, required: true, trim: true },
     nameBn: { type: String, trim: true },
     role: { type: String, required: true, trim: true },

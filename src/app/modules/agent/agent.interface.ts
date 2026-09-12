@@ -1,6 +1,8 @@
 import { Types, Document } from "mongoose";
 
 export interface IAgent extends Document {
+  agentId: string;
+  slug: string;
   name: string;
   nameBn?: string;
   role: string;
