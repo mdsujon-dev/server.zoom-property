@@ -62,7 +62,7 @@ const uniqueSlug = async (title: string, excludeId?: string) => {
 const withRelations = <T>(q: T) =>
   (q as any)
     .populate({ path: "area", select: "_id name nameBn city" })
-    .populate({ path: "agent", select: "_id name photo phone" })
+    .populate({ path: "agent", select: "_id name nameBn role roleBn phone image rating deals respondsIn languages" })
     .populate({ path: "project", select: "_id name slug" })
     .populate({ path: "coverImage", select: "_id key" })
     .populate({ path: "images", select: "_id key" })

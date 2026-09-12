@@ -59,6 +59,7 @@ const projectFields = {
   isFooter: z.boolean().optional(),
   order: z.number().optional(),
   isActive: z.boolean().optional(),
+  agent: objectId.optional().nullable(),
 };
 
 export const projectValidation = {

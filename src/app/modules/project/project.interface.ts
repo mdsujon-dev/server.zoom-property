@@ -96,6 +96,7 @@ export interface IProject extends Document {
   isFooter: boolean;
   isActive: boolean;
   isDeleted: boolean;
+  agent?: Types.ObjectId;
   createdBy?: Types.ObjectId;
   updatedBy?: Types.ObjectId;
   createdAt: Date;

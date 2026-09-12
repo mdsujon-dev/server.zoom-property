@@ -46,6 +46,7 @@ const withRelations = <T>(q: T) =>
     .populate({ path: "area", select: "_id name nameBn city" })
     .populate({ path: "coverImage", select: "_id key" })
     .populate({ path: "images", select: "_id key" })
+    .populate({ path: "agent", select: "_id name nameBn role roleBn phone image rating deals respondsIn languages" })
     .populate({ path: "video.poster", select: "_id key" }) as T;
 
 const createProject = async (payload: Partial<IProject>, createdBy?: string) => {
