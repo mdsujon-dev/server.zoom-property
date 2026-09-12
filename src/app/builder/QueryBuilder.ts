@@ -29,7 +29,7 @@ class QueryBuilder<T> {
         const queryObj = { ...this.query }; // copy
 
         // Filtering
-        const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
+        const excludeFields = ['searchTerm', 'q', 'sort', 'limit', 'page', 'fields'];
 
         excludeFields.forEach((el) => delete queryObj[el]);
 
