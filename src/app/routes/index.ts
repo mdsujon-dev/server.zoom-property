@@ -30,6 +30,7 @@ import { UserRoutes } from "../modules/user/user.routes";
 import { DynamicContentRoutes } from "../modules/dynamicContent/dynamicContent.route";
 import { LandownerProjectRoutes } from "../modules/landownerProject/landownerProject.routes";
 import { ShowcaseVideoRoutes } from "../modules/showcaseVideo/showcaseVideo.routes";
+import { AgentRoutes } from "../modules/agent/agent.routes";
 
 const router = Router();
 
@@ -158,6 +159,10 @@ const moduleRoutes = [
   {
     path: "/page-views",
     route: PageViewRoutes,
+  },
+  {
+    path: "/agents",
+    route: AgentRoutes,
   },
 ];
 

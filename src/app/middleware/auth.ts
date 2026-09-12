@@ -7,7 +7,7 @@ import { UserRole } from "../modules/auth/auth.interface";
 import User from "../modules/auth/auth.model";
 import catchAsync from "../utils/catchAsync";
 
-const auth = (...requiredRoles: UserRole[]) => {
+const auth = (...requiredRoles: string[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
@@ -37,13 +37,8 @@ const auth = (...requiredRoles: UserRole[]) => {
       // Case-insensitive role comparison so legacy lowercase roles
       // (e.g. "super_admin") still match UserRole.SUPER_ADMIN.
       const normalizedRole = String(role ?? user.role ?? "").toUpperCase();
-      const normalizedRequired = requiredRoles.map((r) => String(r).toUpperCase());
-
-      if (
-        normalizedRequired.length > 0 &&
-        !normalizedRequired.includes(normalizedRole)
-      ) {
-        throw new AppError(StatusCodes.UNAUTHORIZED, "You are not authorized!");
+      if (requiredRoles.length > 0 && !requiredRoles.includes(normalizedRole)) {
+        throw new AppError(StatusCodes.FORBIDDEN, "You are not authorized!");
       }
 
       req.user = {
