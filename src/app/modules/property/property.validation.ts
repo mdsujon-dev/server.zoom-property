@@ -69,6 +69,7 @@ const listingFields = {
   hasVirtualTour: z.boolean().optional(),
   virtualTourUrl: optionalUrl,
   videoUrl: optionalUrl,
+  mapUrl: optionalUrl,
 
   coverImage: objectId.optional().nullable(),
   images: z.array(objectId).optional(),

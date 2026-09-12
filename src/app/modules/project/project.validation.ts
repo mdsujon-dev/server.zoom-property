@@ -53,6 +53,7 @@ const projectFields = {
   rajukPermitNo: z.string().optional(),
 
   milestones: z.array(milestone).optional(),
+  mapUrl: optionalUrl,
 
   featured: z.boolean().optional(),
   isHome: z.boolean().optional(),

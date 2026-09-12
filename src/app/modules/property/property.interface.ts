@@ -131,6 +131,7 @@ export interface IProperty extends Document {
   featured: boolean;
   isHome?: boolean;
   order?: number;
+  mapUrl?: string;
 
   agent?: Types.ObjectId;
   /** Set when the unit belongs to a development the agency also lists. */

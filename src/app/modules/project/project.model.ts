@@ -54,6 +54,7 @@ const projectSchema = new Schema<IProject>(
     rajukPermitNo: { type: String, trim: true },
 
     milestones: { type: [milestoneSchema], default: [] },
+    mapUrl: { type: String, trim: true },
 
     featured: { type: Boolean, default: false, index: true },
     isHome: { type: Boolean, default: false, index: true },

@@ -81,6 +81,7 @@ export interface IProject extends Document {
   rajukPermitNo?: string;
 
   milestones: IMilestone[];
+  mapUrl?: string;
 
   featured: boolean;
   order?: number;
